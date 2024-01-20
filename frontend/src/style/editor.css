@@ -1,4 +1,8 @@
 .tiptap {
+    &:focus {
+        outline: none;
+    }
+
     > * + * {
         margin-top: 0.75em;
     }
@@ -41,6 +45,8 @@ button.floating-menu-button:focus {
     border-radius: 5px;
     padding: 5px;
     margin: 5px;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
     border: black solid;
 }
 
