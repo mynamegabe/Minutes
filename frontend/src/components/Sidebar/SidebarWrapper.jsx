@@ -5,13 +5,26 @@ import { SidebarTab } from './SidebarTab'
 import { Divider } from '../Common/Divider'
 import lucideLogo from '../../../public/Lucide_logo.svg'
 
-import config from '../../config'
-
+import { getNodeTitles } from '../../logic-handling/fetchNode'
 
 export function SidebarWrapper(props) {
     const [tabs, setTabs] = useState(['a', 'b', 'c']) // setTabs shd be called on the data fetched frm db
     const [activeTab, setActiveTab] = useState(0)
     const [sidebarOpen, setSidebarOpen] = useState(true)
+
+    useEffect(async () => {
+        try{
+            const titlesRes = await getNodeTitles();
+            if (!titlesRes.ok){
+                throw new Error('Error occured when fetching node titles!')
+            }
+            const data = await titlesRes.json()
+            console.log(data, 'data!!!')
+            
+        } catch(e){
+            console.error(e.message)
+        }
+    }, [tabs, sidebarOpen])
     
     const handleSidebarOpen = () => {
         setSidebarOpen(!sidebarOpen)
@@ -26,15 +39,11 @@ export function SidebarWrapper(props) {
         setActiveTab(tabIndex)
     }
 
-    const stopEvent = (e) => { // for closing of sidebar when clicking anywhere outside of it
-        e.stopPropagation()
-    }
-
     return (
         <React.Fragment>
             <div className='sidebarModal' onClick={closeFromOutside} >
                 <div onClick={handleSidebarOpen}>hell</div> { /*to be removed ltr*/ }
-                <div className={`sidebarContainer ${sidebarOpen && 'sidebarOpen'}`} onClick={stopEvent}>
+                <div className={`sidebarContainer ${sidebarOpen && 'sidebarOpen'}`} onClick={(e)=>{e.stopPropagation()}}>
                     <div className='newPageCloseBtn'>
                         <SidebarTab 
                         onClick={()=>{handlePageOpen('new')}}
