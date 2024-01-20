@@ -6,14 +6,6 @@ export function Nav() {
 
   const menuItems = [
     "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
     "Log Out",
   ];
 
@@ -22,22 +14,25 @@ export function Nav() {
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="hidden sm:hidden"
         />
         <NavbarBrand>
-            <Image
+            <img
                 src="/logo.png"
-                width={36}
-                height={36}
+                width={24}
+                height={24}
                 alt="Minutes"
-                className="invert"
+                className="mr-2"
+                style={{
+                    filter: "invert(1)"
+                }}
             />
             <p className="font-bold text-inherit">Minutes</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
+        {/* <NavbarItem>
           <Link color="foreground" href="#">
             Features
           </Link>
@@ -51,14 +46,14 @@ export function Nav() {
           <Link color="foreground" href="#">
             Integrations
           </Link>
-        </NavbarItem>
+        </NavbarItem> */}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+          <Link href="/login">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button as={Link} color="primary" href="/register" variant="flat">
             Sign Up
           </Button>
         </NavbarItem>
