@@ -99,5 +99,5 @@ button.gradient-bg {
 }
 
 button.gradient-bg:hover {
-    filter: brightness(1.1);
+    filter: brightness(1);
 }
