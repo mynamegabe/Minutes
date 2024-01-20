@@ -1,7 +1,11 @@
+"use client";
+
 import {BubbleMenu, EditorContent, FloatingMenu, useEditor} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
 import React, {useEffect, useState} from "react";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+
 
 export const Editor = () => {
     const editor = useEditor({
@@ -18,19 +22,44 @@ export const Editor = () => {
 
     const [isEditable, setIsEditable] = useState(true)
     const [selectedText, setSelectedText] = useState('')
+    const [mode, setMode] = useState('Notetaking') // 'Notetaking' or 'Read-only'
     console.log(selectedText)
     useEffect(() => {
         if (editor) {
             editor.setEditable(isEditable)
         }
+
+        // document.querySelectorAll('question-node').forEach((node) => {
+        //     node.setAttribute('disabled', false)
+        //     node.setAttribute('contentEditable', false)
+        // })
+
     }, [isEditable, editor])
 
     return (
         <section className="p-0 px-0">
-            <div>
+            {/* <div>
                 <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
                 Editable
-            </div>
+            </div> */}
+            <Dropdown>
+                <DropdownTrigger>
+                    <Button 
+                    variant="bordered" 
+                    >
+                    {mode}
+                    </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Modes"
+                onAction={(key) => {
+                    setMode(key)
+                    setIsEditable(key === 'Notetaking')
+                }}
+                >
+                    <DropdownItem key="Notetaking">Notetaking</DropdownItem>
+                    <DropdownItem key="Read-only">Read-only</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
             {
                 editor && <BubbleMenu editor={editor} tippyOptions={{duration: 100}}>
                     <button
