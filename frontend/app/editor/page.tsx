@@ -20,7 +20,7 @@ export default function EditorPage() {
 			nodeData={nodeData}
 			setNodeData={setNodeData}
 			/>
-			<Editor data={activeTabData}/>
+			{activeTabData && activeTabData.id && <Editor key={activeTabData?.id || ""} data={activeTabData} setData={setActiveTabData}/>}
 		</>
 	);
 }

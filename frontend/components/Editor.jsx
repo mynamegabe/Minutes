@@ -29,34 +29,28 @@ const modes = {
     QUIZ_MODE: "Quiz-Mode",
 }
 
-export const Editor = ({data}) => {
+export const Editor = ({data, setData}) => {
     console.log("data", data)
-    const {title: originalTitle, content, id} = data;
+    let {title: originalTitle, content, id} = data;
+    // content = JSON.parse(content)
+    console.log("content", content)
     const [title, setTitle] = useState(originalTitle);
-    // get /api/notes/{activeTab}
-    // fetch(`${config.API_URL}/api/notes/${activeTab}`, {
-    //     method: 'GET',
-    //     credentials: 'include',
-    //     headers: {'Content-Type': 'application/json'},
-    // }).then((response) => {
-    //     return response.json()
-    // }).then((data) => {
-    //     console.log("GET", data)
-    // }).catch((error) => {
-    //     console.log(error)
     function updateNotesOnDb(editor) {
-        return
         if (!editor) {
+            console.log("editor is null")
             return
         }
+        console.log("datadata", title, editor.getJSON().content)
+        const data = {
+            title: title,
+            content: JSON.stringify(editor ? editor.getJSON().content : []),
+        };
+        setData(data)
         fetch(`${config.API_URL}/api/notes/${id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                title: title,
-                content: editor ? editor.getJSON().content : [],
-            })
+            body: JSON.stringify(data)
         }).then((response) => {
             return response.json()
         }).then((data) => {
@@ -73,7 +67,10 @@ export const Editor = ({data}) => {
             QuestionNode,
         ],
         // content: content,
-        content: content ? content : [],
+        content: {
+            type: "doc",
+            content: content ? content : [],
+        },
         // content: `
         // <h1>Title</h1>
         // <p>Theodore II Doukas Laskaris or Ducas Lascaris (Greek: Θεόδωρος Δούκας Λάσκαρις, romanized: Theodōros Doukas Laskaris; November 1221/1222 – 16 August 1258) was Emperor of Nicaea from 1254 to 1258. He was the only child of Emperor John III Doukas Vatatzes and Empress Irene Laskarina. His mother was the eldest daughter of Theodore I Laskaris, who had established the Empire of Nicaea as a successor state to the Byzantine Empire in Asia Minor after the crusaders captured the Byzantine capital, Constantinople, during the Fourth Crusade in 1204. Theodore received an excellent education from two renowned scholars, Nikephoros Blemmydes and George Akropolites. He made friends with young intellectuals, especially with a page of low birth, George Mouzalon. Theodore began to write treatises on theological, historical and philosophical themes in his youth.</p>
@@ -82,10 +79,10 @@ export const Editor = ({data}) => {
         // <br class="ProseMirror-trailingBreak">
         // `,
         onUpdate: ({editor}) => {
-            // console.log(editor.getHTML());
-            // console.log(editor.getJSON());
-            // PUT /api/notes/{activeTab}
-            updateNotesOnDb(editor);
+            // // console.log(editor.getHTML());
+            // // console.log(editor.getJSON());
+            // // PUT /api/notes/{activeTab}
+            // updateNotesOnDb(editor);
         },
     });
     const [isEditable, setIsEditable] = useState(true);
@@ -132,11 +129,17 @@ export const Editor = ({data}) => {
 
     function handleTitleChange(event) {
         setTitle(event.target.value)
+        // updateNotesOnDb(editor)
+    }
+
+    function saveNote() {
+        console.log("saveNote")
         updateNotesOnDb(editor)
     }
 
     return (
         <section className="py-4 px-0 min-w-7xl flex-grow">
+            <Button onClick={saveNote}>Save</Button>
             <Dropdown>
                 <DropdownTrigger>
                     <Button variant="bordered">{mode}</Button>
@@ -155,7 +158,7 @@ export const Editor = ({data}) => {
             </Dropdown>
 
             <div>
-                <h1 contentEditable={true} onChange={handleTitleChange}>{"Title"+title}</h1>
+                <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
               Editable

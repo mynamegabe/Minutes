@@ -76,7 +76,7 @@ export function SidebarWrapper(props) {
   const createNewNote = async () => {
     const body = {
       title: title,
-      content: [],
+      content: "[]",
     };
 
     const res = await fetch(`${config.API_URL}/api/notes`, {
