@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 
 import {mergeAttributes, NodeViewWrapper, ReactNodeViewRenderer} from "@tiptap/react";
 import {QuizCard} from "@/components/editor-nodes/QuizCard";
+import {Textarea} from "@nextui-org/input";
 
 const className = 'question-node';
 export const QuestionNode = Node.create({
@@ -75,7 +76,7 @@ export function QuestionNodeView(props) {
                     <CardBody>
                         <label contentEditable={false} className="text-sm">Question:</label>
                         <div className="question-node__question">
-                            <Input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}
+                            <Textarea type="text" value={props.node.attrs.question} onChange={handleUserQuestion}
                                    classNames={{
                                        input: 'border-0 outline-none focus:outline-none overflow:word-break'
                                    }}
@@ -84,7 +85,7 @@ export function QuestionNodeView(props) {
                         <br/>
                         <label contentEditable={false} className="text-sm">Answer</label>
                         <div className="question-node__answer">
-                            <Input type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}
+                            <Textarea type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}
                                    classNames={{
                                        input: 'border-0 outline-none focus:outline-none overflow:word-break'
                                    }}/>
