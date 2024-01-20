@@ -49,6 +49,12 @@ export const Editor = () => {
                 >
                     Bullets
                 </button>
+                <button
+                    onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    className={editor.isActive('questionNode') ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                >
+                    Question
+                </button>
             </FloatingMenu>}
             <EditorContent editor={editor}/>
         </section>
