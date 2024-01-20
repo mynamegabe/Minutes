@@ -51,26 +51,26 @@ export const Editor = () => {
 
     const generateQuestions = async (content) => {
         const body = {
-          query: content,
-          type: "questions",
+            query: content,
+            type: "questions",
         };
         setIsLoading(true)
         setIsEditable(false)
         const response = await fetch(`${config.API_URL}/api/generate`, {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
+            method: "POST",
+            credentials: "include",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body),
         })
-          .then((response) => response.json())
-          .then((data) => {
-            setIsLoading(false)
-            setIsEditable(true)
-            console.log(data.data)
-            // TODO
-            setQuestions(data.data)
-          });
-      };
+            .then((response) => response.json())
+            .then((data) => {
+                setIsLoading(false)
+                setIsEditable(true)
+                console.log(data.data)
+                // TODO
+                setQuestions(data.data)
+            });
+    };
 
     return (
         <section className="p-0 px-0">
@@ -81,16 +81,16 @@ export const Editor = () => {
             <Dropdown>
                 <DropdownTrigger>
                     <Button
-                    variant="bordered"
+                        variant="bordered"
                     >
-                    {mode}
+                        {mode}
                     </Button>
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Modes"
-                onAction={(key) => {
-                    setMode(key)
-                    setIsEditable(key === 'Notetaking')
-                }}
+                              onAction={(key) => {
+                                  setMode(key)
+                                  setIsEditable(key === 'Notetaking')
+                              }}
                 >
                     <DropdownItem key="Notetaking">Notetaking</DropdownItem>
                     <DropdownItem key="Read-only">Read-only</DropdownItem>
@@ -99,15 +99,15 @@ export const Editor = () => {
             {
                 editor && <BubbleMenu editor={editor} tippyOptions={{duration: 100}}>
                     {
-                        !isLoading ? (  <button
+                        !isLoading ? (<button
                             onClick={() => generateQuestions(window.getSelection().toString())}
                             className="bg-rose-500 hover:bg-rose-700 text-white px-2 py-1 rounded-md shadow"
-                            >
-                                Generate
-                            </button>) : (    <Button color="primary" isLoading>
-      Loading
-    </Button>
-)
+                        >
+                            Generate
+                        </button>) : (<Button color="primary" isLoading>
+                                Loading
+                            </Button>
+                        )
 
                     }
 
