@@ -24,6 +24,7 @@ export const Editor = () => {
         `,
         onUpdate: ({editor}) => {
             console.log(editor.getHTML())
+            console.log(editor.getJSON())
         }
     });
     const [isEditable, setIsEditable] = useState(true)
