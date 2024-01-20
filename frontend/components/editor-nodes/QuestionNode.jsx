@@ -1,3 +1,5 @@
+import {Card, CardBody, Input} from "@nextui-org/react";
+
 const className = 'question-node';
 export const QuestionNode = Node.create({
     name: 'questionNode',
@@ -52,17 +54,36 @@ export function QuestionNodeView(props) {
         });
     };
     return <NodeViewWrapper className={className}>
-        <div>
+        {/* <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md p-2 dark:bg-[#0B0508] dark:border-white">
             <label contentEditable={false}>Question:</label>
             <div className="question-node__question">
                 <input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}/>
             </div>
-            {/*<NodeViewContent className="question-node__question"/>*/}
             <br/>
             <label contentEditable={false}>Expected Answer:</label>
             <div className="question-node__answer">
                 <input type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}/>
             </div>
-        </div>
+        </div> */}
+        <Card shadow>
+            <CardBody>
+                <label contentEditable={false} className="text-sm">Question:</label>
+                <div className="question-node__question">
+                    <Input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}
+                    classNames={{
+                        input: 'border-0 outline-none focus:outline-none'
+                    }}
+                    />
+                </div>
+                <br/>
+                <label contentEditable={false} className="text-sm">Answer</label>
+                <div className="question-node__answer">
+                    <Input type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}
+                    classNames={{
+                        input: 'border-0 outline-none focus:outline-none'
+                    }}/>
+                </div>
+            </CardBody>
+        </Card>
     </NodeViewWrapper>
 }

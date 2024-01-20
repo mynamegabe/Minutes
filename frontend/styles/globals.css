@@ -72,20 +72,12 @@ button.floating-menu-button:focus {
     color: white;
 }
 
-.question-node {
-    border-radius: 5px;
-    padding: 10px;
-    /*margin: 5px;*/
-    /*margin-left: 0 !important;*/
-    /*padding-left: 0 !important;*/
-     border: white 1px dashed;
-}
 
-.question-node label {
+/* .question-node label {
     font-weight: bold;
-}
+} */
 
-.question-node input {
+/* .question-node input {
     background: transparent !important;
     width: 100%;
-}
+} */
