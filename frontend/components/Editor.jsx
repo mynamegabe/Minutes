@@ -7,6 +7,7 @@ import {
     useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+// import Image from "@tiptap/extension-image";
 import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
 import React, {useEffect, useState} from "react";
 import {
@@ -32,10 +33,8 @@ const modes = {
 }
 
 export const Editor = ({data, setData}) => {
-    console.log("data", data)
     let {title: originalTitle, content, id} = data;
     // content = JSON.parse(content)
-    console.log("content", content)
     const [title, setTitle] = useState(originalTitle);
     function updateNotesOnDb(editor) {
         if (!editor) {
@@ -67,6 +66,9 @@ export const Editor = ({data, setData}) => {
         extensions: [
             StarterKit,
             QuestionNode,
+            // Image.configure({
+            //   allowBase64: true,
+            // })
         ],
         // content: content,
         content: {
@@ -94,7 +96,7 @@ export const Editor = ({data, setData}) => {
         document.dispatchEvent(editableEvent);
     });
     const [selectedText, setSelectedText] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [isQuestionGenerationLoading, setIsQuestionGenerationLoading] = useState(false);
     const [isAILoading, setIsAILoading] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [mode, setMode] = useState(modes.NOTETAKING); // 'Notetaking' or 'Read-Only'
@@ -147,7 +149,7 @@ export const Editor = ({data, setData}) => {
             query: content,
             type: "questions",
         };
-        setIsLoading(true);
+        setIsQuestionGenerationLoading(true);
         setIsEditable(false);
         const response = await fetch(`${config.API_URL}/api/generate`, {
             method: "POST",
@@ -157,11 +159,32 @@ export const Editor = ({data, setData}) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                setIsLoading(false);
+                setIsQuestionGenerationLoading(false);
                 setIsEditable(true);
-                console.log(data.data);
-                // TODO: add questions to editor and remove setQuestions
-                setQuestions(data.data);
+                console.log(JSON.stringify(data));
+                const entries = Object.entries(data.data);
+                const questionNodes = []
+                for (const question of data.data) {
+                    console.log("question", question)
+                    const [key, value] = Object.entries(question)[0];
+                    questionNodes.push(`<question-node question="${key}" answer="${value}"></question-node><br class="ProseMirror-trailingBreak">`)
+
+                }
+                // const endPos = editor.selection.anchor
+
+                editor.commands.focus('end')
+                editor.chain().insertContent(questionNodes.join(''))
+                    .run()
+
+                // editor
+                //     .chain()
+                //     .insertContentAt(endPos, `<question-node question="${key}" answer="${value}">Hello</question-node><br class="ProseMirror-trailingBreak">`)
+                //     .focus(endPos)
+                //     .run()
+
+                // editor.commands.insertContentAt(position,
+                //     `<question-node question="${key}" answer="${value}">Hello</question-node><br class="ProseMirror-trailingBreak">`
+                // );
             });
     };
 
@@ -232,7 +255,7 @@ export const Editor = ({data, setData}) => {
 
                 {editor && (
                     <BubbleMenu editor={editor} tippyOptions={{duration: 100}}>
-                        {!isLoading ? (
+                        {!isQuestionGenerationLoading ? (
                             <button
                                 onClick={() =>
                                     generateQuestions(window.getSelection().toString())
