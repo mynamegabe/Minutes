@@ -100,6 +100,7 @@ export const Editor = ({data, setData}) => {
     const [isQuestionGenerationLoading, setIsQuestionGenerationLoading] = useState(false);
     const [isAILoading, setIsAILoading] = useState(false);
     const [questions, setQuestions] = useState([]);
+    const [imageLoaded, setImageLoaded] = useState(false);
     const [mode, setMode] = useState(modes.NOTETAKING); // 'Notetaking' or 'Read-Only'
     useEffect(() => {
         if (editor) {
@@ -274,16 +275,19 @@ export const Editor = ({data, setData}) => {
                 </Dropdown>
             </div>
 
-            <div className="px-4">
+            <div className="px-4 pt-4">
                 <Image
                 width={10000}
                 height={240}
                 src={config.API_URL + "/static/generated/" + id + ".png"}
-                fallbackSrc="https://via.placeholder.com/300x200"
+                // fallbackSrc="https://via.placeholder.com/300x200"
                 alt="NextUI Image with fallback"
                 classNames={{
-                    wrapper: 'w-full max-w-full mt-4',   
+                    wrapper: `w-full max-w-full mt-0 mb-2 ${imageLoaded ? 'block' : 'hidden'}`,   
                     img: 'rounded-md w-full object-cover h-60'
+                }}
+                onLoad={() => {
+                    setImageLoaded(true)
                 }}
                 />
                 <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
