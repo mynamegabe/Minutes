@@ -36,3 +36,14 @@ button.floating-menu-button:focus {
     background: black;
     color: white;
 }
+
+.question-node {
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    border: black solid;
+}
+
+.question-node label {
+    font-weight: bold;
+}

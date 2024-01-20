@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import {Main} from './pages/Main'
 import {Login} from './pages/Login'
-import {Editor} from './pages/Editor'
+import {EditorPage} from './pages/EditorPage.jsx'
 import { Register } from './pages/Register';
 
 export default function App() {
@@ -18,7 +18,7 @@ export default function App() {
           <Route path="/" element={<Main />} />
           <Route path="login" element={<Login />} />
           {/* <Route path="register" element={<Register />} /> */}
-          <Route path="editor" element={<Editor />} />
+          <Route path="editor" element={<EditorPage />} />
           <Route path="register" element={<Register />} />
         </Route>
       </Routes>

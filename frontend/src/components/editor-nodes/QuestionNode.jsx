@@ -3,7 +3,7 @@ export const QuestionNode = Node.create({
     name: 'questionNode',
     group: 'block',
     content: 'inline*',
-    atom: true,
+    // atom: true,
     component: QuestionNodeView,
     parseHTML() {
         return [
@@ -45,7 +45,8 @@ export function QuestionNodeView(props) {
     // };
     console.log(props.node.attrs.question);
     return <NodeViewWrapper className={className}>
-        <div contentEditable={true} className="question-node">
+        <div>
+            <label contentEditable={false}>Question</label>
             <NodeViewContent className="question-node__question"/>
             <div className="question-node__answer">
                 {/*<input type="text" value="3"/>*/}

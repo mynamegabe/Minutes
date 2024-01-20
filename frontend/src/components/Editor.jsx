@@ -1,11 +1,9 @@
-import '../style/editor.css'
+import {EditorContent, FloatingMenu, useEditor} from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
+import React, {useEffect} from "react";
 
-import {EditorContent, FloatingMenu, useEditor} from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import React, {useEffect} from 'react'
-import {QuestionNode} from "../components/editor-nodes/QuestionNode.jsx";
-
-export function Editor() {
+export const Editor = () => {
     const editor = useEditor({
         extensions: [
             StarterKit,
