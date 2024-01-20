@@ -339,7 +339,6 @@ async def generate_image(request: Request, background_tasks: BackgroundTasks, No
     db.close()
     filename = os.path.join(config.IMAGE_DIR, f"{note_id}.png")
     prompt = gemini.generatePrompt(db_note.content)
-    # imagegen.generateImage(prompt, filename=filename)
     background_tasks.add_task(imagegen.generateImage, prompt, filename=filename)
     return {
         "status": "success",

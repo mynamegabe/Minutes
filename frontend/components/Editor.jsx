@@ -21,6 +21,7 @@ import {
 } from "@nextui-org/react";
 import {Card, CardBody} from "@nextui-org/react";
 import {QuizCard} from "./editor-nodes/QuizCard.jsx";
+import {Notification} from "@/components/Notification.jsx"
 
 import { ChevronDown } from 'lucide-react';
 import config from "@/config.jsx";
@@ -101,6 +102,7 @@ export const Editor = ({data, setData}) => {
     const [isAILoading, setIsAILoading] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [notification, setNotification] = useState("");
     const [mode, setMode] = useState(modes.NOTETAKING); // 'Notetaking' or 'Read-Only'
     useEffect(() => {
         if (editor) {
@@ -154,7 +156,6 @@ export const Editor = ({data, setData}) => {
                 }
             }
         }
-        console.log("final_content", final_content)
         const body = {
             id: id,
             content: final_content,
@@ -168,6 +169,7 @@ export const Editor = ({data, setData}) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data.data);
+                setNotification(data.data.msg);
                 setIsAILoading(false);
                 // editor.commands.insertContent(`<p>${data.data}</p>`);
             });
@@ -395,6 +397,7 @@ export const Editor = ({data, setData}) => {
                         <EditorContent editor={editor}/>
                 )}
             </div>
+            {notification && <Notification message={notification} setMessage={setNotification} />}
         </section>
     );
 };
