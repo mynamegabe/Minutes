@@ -6,6 +6,5 @@ import {Editor} from "../components/Editor.jsx";
 export function EditorPage() {
     return (
         <Editor/>
-
     )
 }
