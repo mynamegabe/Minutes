@@ -1,11 +1,11 @@
-import React, {useState, useEffect } from 'react'
-import './SidebarWrapper.css'
+import React, { useState, useEffect } from "react";
+import "./SidebarWrapper.css";
 
-import { SidebarTab } from './SidebarTab' 
-import { Divider } from '@/components/Common/Divider'
-import { X, Menu, PlusCircle } from 'lucide-react';
+import { SidebarTab } from "./SidebarTab";
+import { Divider } from "@/components/Common/Divider";
+import { X, Menu, PlusCircle } from "lucide-react";
 
-import { Button } from '@nextui-org/button';
+import { Button } from "@nextui-org/button";
 
 import config from "@/config"
 import { getNodeTitles } from '@/logic-handling/fetchNode'
@@ -15,8 +15,8 @@ import { getNodeById } from '@/logic-handling/fetchNodeById'
 export function SidebarWrapper(props) {
     const {activeTab, setActiveTab, nodeData, setNodeData } = props;
 
-    const [tabs, setTabs] = useState([]) // setTabs shd be called on the data fetched frm db
-    const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [tabs, setTabs] = useState([]); // setTabs shd be called on the data fetched frm db
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
     useEffect(() => {
         try {
@@ -62,49 +62,65 @@ export function SidebarWrapper(props) {
         setActiveTab(tabIndex)
     }
 
-    return (
-        <>  {sidebarOpen ? 
-
-                <div className={`py-0 px-0 m-0 sticky top-16 dark:border-gray-500 border-r sidebarContainer ${sidebarOpen && 'sidebarOpen'}`} onClick={(e)=>{e.stopPropagation()}}>
-                    <div className='newPageCloseBtn p-4'>
-                        {/* <SidebarTab 
+  return (
+    <>
+      {" "}
+      {sidebarOpen ? (
+        <div
+          className={`py-0 px-0 m-0 sticky top-16 dark:border-gray-500 border-r sidebarContainer ${
+            sidebarOpen && "sidebarOpen"
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <div className="newPageCloseBtn p-4">
+            {/* <SidebarTab 
                         onClick={()=>{handlePageOpen('new')}}
                         >
                             New Tab
                         </SidebarTab>   */}
-                        <Button
-                        // variant='solid'
-                        onClick={()=>{handlePageOpen('new')}}
-                        className="gradient-bg button border-0"
-                        >
-                            New Note <PlusCircle size={16}/>
-                        </Button>
-                        <div className='closeBtnContainer'>
-                            <span onClick={handleSidebarOpen}>
-                                {/* <img className='svgLogo' src={lucideLogo} alt='Lucide Logo' /> */}
-                                <X/>
-                            </span>
-                        </div>   
-                    </div> 
-                    <Divider/>
-                    <div className="p-4 flex flex-col gap-4">
-                    {
-                        tabs.map((tab, index) => (
-                            <SidebarTab 
-                            key={index} 
-                            active={activeTab===index}
-                            onClick={()=>{handlePageOpen(tab.title, index)}}
-                            >
-                                {tab.title}
-                            </SidebarTab>
-                        ))
-                    }
-                    </div>
-                </div>
-                :
-                <div className={`sidebarContainer p-4 ${sidebarOpen && 'sidebarOpen'} ${!sidebarOpen && 'sidebarIcon'}`} onClick={handleSidebarOpen}><Menu size={24} className="editorMenu"/></div>
-            }   
-        </>
-    );
+            <Button
+              // variant='solid'
+              onClick={() => {
+                handlePageOpen("new");
+              }}
+              className="gradient-bg button border-0"
+            >
+              New Note <PlusCircle size={16} />
+            </Button>
+            <div className="closeBtnContainer">
+              <span onClick={handleSidebarOpen}>
+                {/* <img className='svgLogo' src={lucideLogo} alt='Lucide Logo' /> */}
+                <X />
+              </span>
+            </div>
+          </div>
+          <Divider />
+          <div className="p-4 flex flex-col gap-4">
+            {tabs.map((tab, index) => (
+              <SidebarTab
+                key={index}
+                active={activeTab === index}
+                onClick={() => {
+                  handlePageOpen(tab.title, index);
+                }}
+              >
+                {tab.title}
+              </SidebarTab>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div
+          className={`sidebarContainer p-4 ${sidebarOpen && "sidebarOpen"} ${
+            !sidebarOpen && "sidebarIcon"
+          }`}
+          onClick={handleSidebarOpen}
+        >
+          <Menu size={24} className="editorMenu" />
+        </div>
+      )}
+    </>
+  );
 }
- 
