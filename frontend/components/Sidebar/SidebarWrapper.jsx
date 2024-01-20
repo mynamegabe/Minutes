@@ -6,6 +6,7 @@ import { Divider } from '@/components/Common/Divider'
 import { X, Menu, PlusCircle } from 'lucide-react';
 
 import config from "@/config"
+import { getNodeTitles } from "@/logic-handling/fetchNodeId"
 
 import { getNodeTitles } from '@/logic-handling/fetchNode'
 import { Button } from '@nextui-org/button';
@@ -17,11 +18,7 @@ export function SidebarWrapper(props) {
 
     useEffect(() => {
         try {
-            fetch(`${config.API_URL}/api/notes`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-            }).then(response => response.json())
+            getNodeTitles.then(response => response.json())
             .then(tabsData => {
                 console.log(tabsData)
                 setTabs(tabsData.data)

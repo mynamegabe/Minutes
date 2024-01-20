@@ -27,8 +27,8 @@ export const Editor = () => {
     });
     const [isEditable, setIsEditable] = useState(true)
 
-    const editableEvent = new CustomEvent('editable', {detail: isEditable})
     useEffect(() => {
+        const editableEvent = new CustomEvent('editable', {detail: isEditable})
         document.dispatchEvent(editableEvent)
     })
     const [selectedText, setSelectedText] = useState('')
@@ -114,32 +114,36 @@ export const Editor = () => {
                 </BubbleMenu>
             }
             {editor && <FloatingMenu editor={editor} tippyOptions={{duration: 100}}>
-                <button
-                    onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
-                    className={editor.isActive('heading', {level: 1}) ? 'is-active floating-menu-button' : 'floating-menu-button'}
-                >
-                    Heading 1
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}
-                    className={editor.isActive('heading', {level: 2}) ? 'is-active floating-menu-button' : 'floating-menu-button'}
-                >
-                    Heading 2
-                </button>
-                <button
-                    onClick={() => {
-                        editor.commands.insertContent('<question-node question="" answer="">Hello</question-node><br class="ProseMirror-trailingBreak">');
-                    }}
-                    className={editor.isActive('questionNode') ? 'is-active floating-menu-button' : 'floating-menu-button'}
-                >
-                    Question
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={editor.isActive('bulletList') ? 'is-active floating-menu-button' : 'floating-menu-button'}
-                >
-                    Bullets
-                </button>
+                <Card>
+                    <CardBody>
+                    <button
+                        onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
+                        className={editor.isActive('heading', {level: 1}) ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                    >
+                        Heading 1
+                    </button>
+                    <button
+                        onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}
+                        className={editor.isActive('heading', {level: 2}) ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                    >
+                        Heading 2
+                    </button>
+                    <button
+                        onClick={() => {
+                            editor.commands.insertContent('<question-node question="" answer="">Hello</question-node><br class="ProseMirror-trailingBreak">');
+                        }}
+                        className={editor.isActive('questionNode') ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                    >
+                        Question
+                    </button>
+                    <button
+                        onClick={() => editor.chain().focus().toggleBulletList().run()}
+                        className={editor.isActive('bulletList') ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                    >
+                        Bullets
+                    </button>
+                    </CardBody>
+                </Card>
             </FloatingMenu>}
             <EditorContent editor={editor}/>
         </section>

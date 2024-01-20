@@ -65,17 +65,24 @@ nav header {
     }
 }
 
-button.floating-menu-button {
-    /*2px thick rounded borders*/
-    border: 2px solid #000000;
-    border-radius: 5px;
-    margin: 0 4px;
+.tippy-box {
+
 }
+
+/* 
+button.floating-menu-button {
+    2px thick rounded borders;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin: 0px;
+    text-align: left;
+    padding:
+} */
 
 button.floating-menu-button:focus {
     background: black;
     color: white;
-}
+} */
 
 .question-node{
     width: 95%;

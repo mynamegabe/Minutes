@@ -69,8 +69,6 @@ export function QuestionNodeView(props) {
         });
     };
     return <NodeViewWrapper className={className}>
-        {editable && <h1>editable</h1>}
-        {!editable && <h1>not editable</h1>}
         {
             editable ?
                 <Card shadow>
