@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import config from '@/config'
+import config from '../config'
 
-function Login() {
+export function Login() {
     const navigate = useNavigate()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -25,4 +25,18 @@ function Login() {
             navigate('/editor')
         }
     }
+
+    return (
+        <div>
+      <h2>Login</h2>
+    <form>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required />
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+      <button onClick={handleSubmit}>Login</button>
+    </form>
+      
+      </div>
+    )
 }

@@ -13,3 +13,15 @@ module.exports = {
   darkMode: "class",
   plugins: [nextui()],
 };
+
+/** @type {import('tailwindcss').Config} */ // sidebar
+export default {
+  content: [
+    // ...
+    'node_modules/flowbite-react/lib/esm/**/*.js',
+  ],
+  plugins: [
+    // ...
+    require('flowbite/plugin'),
+  ],
+};

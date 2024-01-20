@@ -6,13 +6,29 @@ import {Tabs, Tab, Card, CardBody, CardHeader} from "@nextui-org/react";
 
 // define your extension array
 const extensions = [
-  StarterKit,
+  StarterKit.configure({
+    // text: 'Type something...?',
+  }),
+  FloatingMenu.configure({
+    element: document.querySelector('.menu'),
+  }),
 ]
 
-const content = '<p>Hello World!</p>'
+const content = '<p>Type something...</p>'
 
 // Text Editor that uses tiptap
 export function Editor(props) {
+    const editor = useEditor({
+        extensions: [
+          StarterKit,
+        ],
+        content: `
+          <p>
+          Type something...
+          </p>
+          <p></p>
+        `,
+      });
     return (
         <EditorProvider extensions={extensions} content={content}>
             {/* <FloatingMenu>This is the floating menu</FloatingMenu>

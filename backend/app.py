@@ -9,7 +9,9 @@ import hashlib
 from modules.database import get_db, Base, engine, Session
 from modules.authorization import authorize_user
 import modules.gemini as gemini
+from modules.parser import parseQuestions
 from schemas import users as userSchema
+from schemas import ai as aiSchema
 from controllers import users as userController
 import config
 
@@ -82,9 +84,24 @@ async def login(request: Request, user: userSchema.UserBase, db: Session = Depen
 
 
 @app.post("/api/query")
-async def query(request: Request, query: str, user: dict = Depends(authorize_user)):
+async def query(request: Request, query: aiSchema.QueryBase, username: str = Depends(authorize_user)):
     response = gemini.queryGemini(query)
     return {
         "status": "success",
         "msg": response,
+    }
+
+
+@app.post("/api/generate")
+async def generate(request: Request, query: aiSchema.GenerateModel, username: str = Depends(authorize_user)):
+    response = ""
+    match query.type:
+        case "questions":
+            response = gemini.generateQuestions(query.query)
+        case _:
+            response = gemini.generateGemini(query.query)
+    questions = parseQuestions(response)            
+    return {
+        "status": "success",
+        "data": questions,
     }
