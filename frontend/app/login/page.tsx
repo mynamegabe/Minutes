@@ -5,6 +5,8 @@ import "@/styles/globals.css";
 import { useState } from "react";
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import config from "@/config"
+import "@/styles/globals.css";
+import { SwatchBook } from 'lucide-react';
 
 export default function LoginPage() {
 	// const navigate = useNavigate()
@@ -34,26 +36,28 @@ export default function LoginPage() {
     return (
         <>
         {/* <Nav /> */}
-            <section className="w-full">
+            <section className="w-full h-full">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-full">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                    Minutes    
+                    <SwatchBook size={40} />
                 </a>
-                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-[#070305] dark:border-white">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        <h1 className="text-xl text-left font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Sign in to your account
                         </h1>
-                        {error && <span className="text-sm text-red-800">{error}</span>}
+                        {error && <p className="text-sm text-left text-red-800">{error}</p>}
                         <form className="space-y-4 md:space-y-6" action="#">
                             <div>
-                            <div className="mb-2 block">
+                            <div className="mb-2 block text-left">
 								<Label htmlFor="username" value="Your username" />
 								</div>
-								<TextInput id="username" type="username" placeholder="Username" onChange={(event) => setUsername(event.target.value)} required />
+								<TextInput id="username" type="username" placeholder="Username" onChange={(event) => setUsername(event.target.value)} required
+                                    className="bg-black"
+                                />
                             </div>
                             <div>
-                            <div className="mb-2 block">
+                            <div className="mb-2 block text-left">
 								<Label htmlFor="password" value="Your password" />
 								</div>
 								<TextInput id="password" type="password" placeholder="••••••••" onChange={(event) => setPassword(event.target.value)} required />
@@ -64,13 +68,13 @@ export default function LoginPage() {
                                         <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
                                     </div>
                                     <div className="ml-3 text-sm">
-                                        <label for="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
+                                        <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                                     </div>
                                 </div>
                                 <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                             </div>
                             <button onClick={handleSubmit}  className="w-full text-white bg-primary hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-                            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                            <p className="text-sm text-left font-light text-gray-500 dark:text-gray-400">
                                 Don’t have an account yet? <a href="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                             </p>
                         </form>

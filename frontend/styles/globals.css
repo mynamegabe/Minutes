@@ -19,6 +19,14 @@ nav header {
     max-width: 100vw !important;
 }
 
+.gradient-bg {
+    background: linear-gradient(135deg, hsl(69, 78%, 93%) 0%, hsla(22, 94%, 93%, 1) 50%, hsla(333, 60%, 97%, 1) 100%);
+}
+
+.dark .gradient-bg {
+    background: linear-gradient(90deg, hsla(69, 78%, 93%, 1) 0%, hsla(68, 80%, 4%, 1) 0%, hsla(23, 95%, 8%, 1) 50%, hsla(333, 61%, 10%, 1) 100%);
+}
+
 .tiptap {
     outline: none;
 
