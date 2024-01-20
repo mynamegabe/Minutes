@@ -5,11 +5,10 @@ import { SidebarTab } from './SidebarTab'
 import { Divider } from '@/components/Common/Divider'
 import { X, Menu, PlusCircle } from 'lucide-react';
 
-import config from "@/config"
-import { getNodeTitles } from "@/logic-handling/fetchNodeId"
-
-import { getNodeTitles } from '@/logic-handling/fetchNode'
 import { Button } from '@nextui-org/button';
+
+import config from "@/config"
+import { getNodeTitles } from '@/logic-handling/fetchNode'
 
 export function SidebarWrapper(props) {
     const [tabs, setTabs] = useState(['a', 'b', 'c']) // setTabs shd be called on the data fetched frm db
