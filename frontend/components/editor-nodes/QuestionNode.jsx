@@ -38,7 +38,7 @@ export const QuestionNode = Node.create({
     }
 })
 import {Node} from '@tiptap/core'
-import React from 'react'
+import React, {useEffect} from 'react'
 
 import {mergeAttributes, NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer} from "@tiptap/react";
 

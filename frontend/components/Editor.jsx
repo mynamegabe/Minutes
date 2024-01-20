@@ -17,13 +17,16 @@ export const Editor = () => {
         <h1>Title</h1>
         <question-node question="What is 1+2?" answer="3">
         </question-node>
+        <br class="ProseMirror-trailingBreak">
         `,
+        onUpdate: ({editor}) => {
+            console.log(editor.getHTML())
+        }
     });
 
     const [isEditable, setIsEditable] = useState(true)
     const [selectedText, setSelectedText] = useState('')
     const [mode, setMode] = useState('Notetaking') // 'Notetaking' or 'Read-only'
-    console.log(selectedText)
     useEffect(() => {
         if (editor) {
             editor.setEditable(isEditable)
@@ -44,8 +47,8 @@ export const Editor = () => {
             </div> */}
             <Dropdown>
                 <DropdownTrigger>
-                    <Button 
-                    variant="bordered" 
+                    <Button
+                    variant="bordered"
                     >
                     {mode}
                     </Button>
@@ -85,7 +88,7 @@ export const Editor = () => {
                 </button>
                 <button
                     onClick={() => {
-                        editor.commands.insertContent('<question-node question="" answer="">Hello</question-node>');
+                        editor.commands.insertContent('<question-node question="" answer="">Hello</question-node><br class="ProseMirror-trailingBreak">');
                     }}
                     className={editor.isActive('questionNode') ? 'is-active floating-menu-button' : 'floating-menu-button'}
                 >
