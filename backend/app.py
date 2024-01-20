@@ -49,7 +49,7 @@ middleware = [Middleware(SessionMiddleware, secret_key=config.SECRET_KEY)]
 app = FastAPI(middleware=middleware, lifespan=lifespan)
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost:3000",
     # "*"
 ]
 
