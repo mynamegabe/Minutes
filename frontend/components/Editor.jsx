@@ -16,7 +16,8 @@ import {
     DropdownMenu,
     DropdownItem,
     Button,
-    Spinner
+    Spinner,
+    Image
 } from "@nextui-org/react";
 import {Card, CardBody} from "@nextui-org/react";
 import {QuizCard} from "./editor-nodes/QuizCard.jsx";
@@ -112,8 +113,6 @@ export const Editor = ({data, setData}) => {
     const generateSummary = async () => {
         setIsAILoading(true);
         let content = editor.getJSON().content;
-        console.log("AAAAA")
-        console.log(content)
         let final_content = "";
         for (let i = 0; i < content.length; i++) {
             console.log(content[i]);
@@ -137,10 +136,39 @@ export const Editor = ({data, setData}) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data.data);
-                // TODO: add questions to editor and remove setQuestions
-                // setSummary(data.data);
                 setIsAILoading(false);
                 editor.commands.insertContent(`<p>${data.data}</p>`);
+            });
+    };
+
+    const generateImage = async () => {
+        setIsAILoading(true);
+        let content = editor.getJSON().content;
+        let final_content = "";
+        for (let i = 0; i < content.length; i++) {
+            console.log(content[i]);
+            if (content[i].content) {
+                for (let j = 0; j < content[i].content.length; j++) {
+                   final_content += content[i].content[j].text;
+                }
+            }
+        }
+        console.log("final_content", final_content)
+        const body = {
+            id: id,
+            content: final_content,
+        };
+        fetch(`${config.API_URL}/api/image/generate`, {
+            method: "POST",
+            credentials: "include",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.data);
+                setIsAILoading(false);
+                // editor.commands.insertContent(`<p>${data.data}</p>`);
             });
     };
 
@@ -213,8 +241,8 @@ export const Editor = ({data, setData}) => {
                                 case "Summary":
                                     generateSummary()
                                     break;
-                                case "Image Generation":
-                                    console.log("Image Generation")
+                                case "Image":
+                                    generateImage()
                                     break;
                                 default:
                                     console.log("default")
@@ -247,6 +275,7 @@ export const Editor = ({data, setData}) => {
             </div>
 
             <div className="px-4">
+                
                 <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>

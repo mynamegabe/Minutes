@@ -70,3 +70,11 @@ def verifyAnswer(question, answer, expected):
   response = model.generate_content(prompt_parts)
   print(response.prompt_feedback)
   return response.text == "correct"
+
+def generatePrompt(content):
+  prompt_parts = [
+    content,
+    "\nBased on the content, generate a prompt to generate an image.",
+  ]
+  response = model.generate_content(prompt_parts)
+  return response.text

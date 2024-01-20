@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, Request, BackgroundTasks
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -7,11 +7,13 @@ from contextlib import asynccontextmanager
 import hashlib
 import uuid
 import json
+import os
 
 from modules.database import get_db, Base, engine, Session
 from modules.authorization import authorize_user
 import modules.gemini as gemini
 import modules.parser as parser
+import modules.imagegen as imagegen
 from schemas import users as userSchema
 from schemas import ai as aiSchema
 from schemas import notes as noteSchema
@@ -319,4 +321,27 @@ async def grade_questions(request: Request, note_id: str, answers: noteSchema.No
     return {
         "status": "success",
         "data": data,
+    }
+
+
+@app.post("/api/image/generate")
+async def generate_image(request: Request, background_tasks: BackgroundTasks, Note: aiSchema.NoteBase, username: str = Depends(authorize_user)):
+    note_id = Note.id
+    db = Session()
+    db_note = notesController.get_note_by_id_and_username(db, note_id, username)
+    if not db_note:
+        return {
+            "status": "error",
+            "msg": "Note not found",
+        }
+    db.close()
+    filename = os.path.join(config.IMAGE_DIR, f"{note_id}.png")
+    prompt = gemini.generatePrompt(db_note.content)
+    # imagegen.generateImage(prompt, filename=filename)
+    background_tasks.add_task(imagegen.generateImage, prompt, filename=filename)
+    return {
+        "status": "success",
+        "data": {
+            "msg": "Image generating",
+        }
     }
