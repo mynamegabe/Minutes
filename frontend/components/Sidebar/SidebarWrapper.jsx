@@ -168,7 +168,7 @@ export function SidebarWrapper(props) {
             </div>
           </div>
           <Divider />
-          <div className="p-4 flex flex-col gap-4 overflow-y-auto">
+          <div className="h-sidebar p-4 flex flex-col gap-4 overflow-y-auto">
             {tabs.map((tab, index) => (
               <SidebarTab
                 key={index}

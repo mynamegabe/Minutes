@@ -243,7 +243,7 @@ async def create_notes(request: Request, note: noteSchema.NoteBase, username: st
 
 
 @app.put("/api/notes/{note_id}")
-async def update_notes(request: Request, note_id: int, note: noteSchema.NoteBase, username: str = Depends(authorize_user)):
+async def update_notes(request: Request, note_id: str, note: noteSchema.NoteBase, username: str = Depends(authorize_user)):
     db = Session()
     db_note = notesController.get_note_by_id_and_username(db, note_id, username)
     if not db_note:
@@ -259,7 +259,7 @@ async def update_notes(request: Request, note_id: int, note: noteSchema.NoteBase
     }
 
 @app.get("/api/notes/{note_id}/questions")
-async def generate_questions(request: Request, note_id: int, username: str = Depends(authorize_user)):
+async def generate_questions(request: Request, note_id: str, username: str = Depends(authorize_user)):
     db = Session()
     db_note = notesController.get_note_by_id_and_username(db, note_id, username)
     if not db_note:
@@ -297,7 +297,7 @@ async def delete_notes(request: Request, note_id: str, username: str = Depends(a
 
 
 @app.post("/api/notes/{note_id}/questions")
-async def grade_questions(request: Request, note_id: int, answers: noteSchema.NoteAnswers, username: str = Depends(authorize_user)):
+async def grade_questions(request: Request, note_id: str, answers: noteSchema.NoteAnswers, username: str = Depends(authorize_user)):
     db = Session()
     db_note = notesController.get_note_by_id_and_username(db, note_id, username)
     if not db_note:
