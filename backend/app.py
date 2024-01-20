@@ -210,3 +210,48 @@ async def update_notes(request: Request, note_id: int, note: noteSchema.NoteBase
         "status": "success",
         # "data": db_note,
     }
+
+@app.get("/api/notes/{note_id}/questions")
+async def generate_questions(request: Request, note_id: int, username: str = Depends(authorize_user)):
+    db = Session()
+    db_note = notesController.get_note_by_id_and_username(db, note_id, username)
+    if not db_note:
+        return {
+            "status": "error",
+            "msg": "Note not found",
+        }
+    content = db_note.content
+    questions = parser.extractQuestions(content)
+    db.close()
+    return {
+        "status": "success",
+        "data": questions,
+    }
+
+
+@app.post("/api/notes/{note_id}/questions")
+async def grade_questions(request: Request, note_id: int, answers: noteSchema.NoteAnswers, username: str = Depends(authorize_user)):
+    db = Session()
+    db_note = notesController.get_note_by_id_and_username(db, note_id, username)
+    if not db_note:
+        return {
+            "status": "error",
+            "msg": "Note not found",
+        }
+    content = db_note.content
+    questions = parser.extractQuestions(content)
+    total = len(questions)
+    grade = 0
+    for i in range(total):
+        if questions[i] == answers[i]:
+            grade += 1
+    data = {
+        "total": total,
+        "correct": grade,
+        "incorrect": total - grade,
+    }
+    db.close()
+    return {
+        "status": "success",
+        "data": data,
+    }
