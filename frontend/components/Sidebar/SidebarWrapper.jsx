@@ -5,8 +5,6 @@ import { SidebarTab } from "./SidebarTab";
 import { Divider } from "@/components/Common/Divider";
 import { X, Menu, PlusCircle } from "lucide-react";
 
-import { Button } from "@nextui-org/button";
-
 import config from "@/config"
 import { getNodeTitles } from '@/logic-handling/fetchNode'
 import { getNodeById } from '@/logic-handling/fetchNodeById'
