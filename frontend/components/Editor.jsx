@@ -275,7 +275,17 @@ export const Editor = ({data, setData}) => {
             </div>
 
             <div className="px-4">
-                
+                <Image
+                width={10000}
+                height={240}
+                src={config.API_URL + "/static/generated/" + id + ".png"}
+                fallbackSrc="https://via.placeholder.com/300x200"
+                alt="NextUI Image with fallback"
+                classNames={{
+                    wrapper: 'w-full max-w-full mt-4',   
+                    img: 'rounded-md w-full object-cover h-60'
+                }}
+                />
                 <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
