@@ -105,3 +105,14 @@ button.gradient-bg:hover {
 .h-sidebar {
     max-height: calc(100vh - 136px);
 }
+
+#clear-border {
+    border: none !important;
+    outline: none !important;
+}
+
+#clear-border:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}

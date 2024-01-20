@@ -51,7 +51,6 @@ export function SidebarWrapper(props) {
     }
   }, []);
 
-  useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getNodeById(tabs[activeTab].id);
@@ -66,8 +65,10 @@ export function SidebarWrapper(props) {
       }
     };
 
-    fetchData();
-  }, [activeTab]);
+
+    useEffect(() => {
+        fetchData();
+    }, [activeTab]);
 
   const handleSidebarOpen = () => {
     setSidebarOpen(!sidebarOpen);

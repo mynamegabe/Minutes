@@ -337,8 +337,14 @@ export const Editor = ({data, setData}) => {
                     </DropdownMenu>
                 </Dropdown>
                 <Input content={searchQuestion} onKeyDown={handleSearchChange} type="search"
-                       placeholder="Ask something..."></Input>
-                <Button className="gradient-bg" type="button" onClick={saveNote}>Save</Button>
+                    placeholder="Ask something..."
+                    id="clear-border"
+                    classNames={{
+                        wrapper: "h-10",
+                        inputWrapper: "h-10",
+                    }}
+                ></Input>
+                <Button className="gradient-bg flex-shrink" type="button" onClick={saveNote}>Save</Button>
             </div>
 
             <div className="px-4 pt-4">
@@ -356,7 +362,7 @@ export const Editor = ({data, setData}) => {
                     setImageLoaded(true)
                 }}
                 />
-                <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
+                <input className="bg-transparent outline-none border-none" onChange={handleTitleChange} value={title}/>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
               Editable
