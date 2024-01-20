@@ -1,35 +1,62 @@
-// src/Tiptap.jsx
-import React from "react";
-import { EditorProvider, FloatingMenu, BubbleMenu } from '@tiptap/react'
+import '../style/editor.css'
+
+import {EditorContent, FloatingMenu, useEditor} from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import {Tabs, Tab, Card, CardBody, CardHeader} from "@nextui-org/react";
+import React, {useEffect} from 'react'
+import {QuestionNode} from "../components/editor-nodes/QuestionNode.jsx";
 
-// define your extension array
-const extensions = [
-  StarterKit.configure({
-    // text: 'Type something...?',
-  })
-]
-
-const content = '<p>Type something...</p>'
-
-// Text Editor that uses tiptap
-export function Editor(props) {
+export function Editor() {
     const editor = useEditor({
         extensions: [
-          StarterKit,
+            StarterKit,
+            QuestionNode,
         ],
         content: `
-          <p>
-          Type something...
-          </p>
-          <p></p>
-        `,
-      });
+      <p>
+        This is an example of a Medium-like editor. Enter a new line and some buttons will appear.
+      </p>
+      <p></p>
+      <question-node question="what is 1-3?">
+        <p>What is 1+2?</p>
+      </question-node>
+    `,
+    });
+
+    const [isEditable, setIsEditable] = React.useState(true)
+
+    useEffect(() => {
+        if (editor) {
+            editor.setEditable(isEditable)
+        }
+    }, [isEditable, editor])
+
     return (
-        <EditorProvider extensions={extensions} content={content}>
-            {/* <FloatingMenu>This is the floating menu</FloatingMenu>
-            <BubbleMenu>This is the bubble menu</BubbleMenu> */}
-        </EditorProvider>
-    );
+        <>
+            <div>
+                <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
+                Editable
+            </div>
+            {editor && <FloatingMenu editor={editor} tippyOptions={{duration: 100}}>
+                <button
+                    onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
+                    className={editor.isActive('heading', {level: 1}) ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                >
+                    h1
+                </button>
+                <button
+                    onClick={() => editor.chain().focus().toggleHeading({level: 2}).run()}
+                    className={editor.isActive('heading', {level: 2}) ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                >
+                    h2
+                </button>
+                <button
+                    onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    className={editor.isActive('bulletList') ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                >
+                    bullet list
+                </button>
+            </FloatingMenu>}
+            <EditorContent editor={editor}/>
+        </>
+    )
 }
