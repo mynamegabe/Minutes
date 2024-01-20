@@ -8,10 +8,7 @@ import {Tabs, Tab, Card, CardBody, CardHeader} from "@nextui-org/react";
 const extensions = [
   StarterKit.configure({
     // text: 'Type something...?',
-  }),
-  FloatingMenu.configure({
-    element: document.querySelector('.menu'),
-  }),
+  })
 ]
 
 const content = '<p>Type something...</p>'
