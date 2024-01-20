@@ -8,16 +8,19 @@ import { SidebarWrapper } from '@/components/Sidebar/SidebarWrapper'
 
 export default function EditorPage() {
 	const [activeTab, setActiveTab] = useState(0)
+	const [activeTabData, setActiveTabData] = useState({})
     const [nodeData, setNodeData] = useState('')
 	return (
 		<>
 			<SidebarWrapper 
 			activeTab={activeTab} 
 			setActiveTab={setActiveTab}
+			activeTabData={activeTabData}
+			setActiveTabData={setActiveTabData}
 			nodeData={nodeData}
 			setNodeData={setNodeData}
 			/>
-			<Editor activeTab={activeTab}/>
+			<Editor data={activeTabData}/>
 		</>
 	);
 }

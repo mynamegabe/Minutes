@@ -205,7 +205,7 @@ async def get_notes(request: Request, username: str = Depends(authorize_user)):
 
 
 @app.get("/api/notes/{note_id}")
-async def get_note_by_id(request: Request, note_id: int, username: str = Depends(authorize_user)):
+async def get_note_by_id(request: Request, note_id: str, username: str = Depends(authorize_user)):
     db = Session()
     note = notesController.get_note_by_id_and_username(db, note_id, username)
     db.close()

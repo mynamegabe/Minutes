@@ -5,8 +5,6 @@ import { SidebarTab } from "./SidebarTab";
 import { Divider } from "@/components/Common/Divider";
 import { X, Menu, PlusCircle } from "lucide-react";
 
-import { Button } from "@nextui-org/button";
-
 import config from "@/config"
 import { getNodeTitles } from '@/logic-handling/fetchNode'
 import { getNodeById } from '@/logic-handling/fetchNodeById'
@@ -26,7 +24,7 @@ import {
 } from "@nextui-org/react";
 
 export function SidebarWrapper(props) {
-    const {activeTab, setActiveTab, nodeData, setNodeData } = props;
+    const {activeTab, setActiveTab, activeTabData, setActiveTabData, nodeData, setNodeData } = props;
 
   const [tabs, setTabs] = useState([]); // setTabs shd be called on the data fetched frm db
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -55,7 +53,7 @@ export function SidebarWrapper(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getNodeById(activeTab);
+                const data = await getNodeById(tabs[activeTab].id);
                 console.log(data, 'lolll');
                 if (!data.ok) {
                     throw new Error('Error occurred when fetching node by ID!');
@@ -75,6 +73,7 @@ export function SidebarWrapper(props) {
 
     const handlePageOpen = (page, tabIndex) => { // insert logic for displaying diff nodes &/ create new node
         setActiveTab(tabIndex)
+        setActiveTabData(tabs[tabIndex])
     }
 
   const createNewNote = async () => {
