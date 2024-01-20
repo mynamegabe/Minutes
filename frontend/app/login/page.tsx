@@ -53,7 +53,6 @@ export default function LoginPage() {
 								<Label htmlFor="username" value="Your username" />
 								</div>
 								<TextInput id="username" type="username" placeholder="Username" onChange={(event) => setUsername(event.target.value)} required
-                                    className="bg-black"
                                 />
                             </div>
                             <div>

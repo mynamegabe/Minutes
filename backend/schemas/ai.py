@@ -11,3 +11,4 @@ class GenerateModel(QueryBase):
 class VerifyModel(BaseModel):
     question: str
     answer: str
+    expected: str

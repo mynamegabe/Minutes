@@ -57,7 +57,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT"],
     allow_headers=["*"],
 )
 
@@ -143,7 +143,7 @@ async def generate(request: Request, query: aiSchema.GenerateModel, username: st
 
 @app.post("/api/verify")
 async def verify(request: Request, query: aiSchema.VerifyModel, username: str = Depends(authorize_user)):
-    response = gemini.verifyAnswer(query.question, query.answer)
+    response = gemini.verifyAnswer(query.question, query.answer, query.expected)
     return {
         "status": "success",
         "msg": response,

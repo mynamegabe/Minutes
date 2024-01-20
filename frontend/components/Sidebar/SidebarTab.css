@@ -5,10 +5,11 @@
     align-items: center;
 }
 
-.tabContainer:hover{
-    background-color: brown;
+.tabContainer.active{
+    /* background-color: #262732; */
 }
 
-.tabName{
-    font-size: 17px;
+.tabContainer:hover{
+    /* background-color: #262732; */
+    cursor: pointer;
 }

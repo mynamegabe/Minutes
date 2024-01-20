@@ -30,6 +30,7 @@ export const siteConfig = {
 	links: {
 		github: "https://github.com/nextui-org/nextui",
 		twitter: "https://twitter.com/getnextui",
+		discord: 'https://discord.com', // put this for the time being
 		docs: "https://nextui.org",
 	},
 };

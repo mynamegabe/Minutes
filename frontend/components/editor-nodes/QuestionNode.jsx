@@ -67,11 +67,11 @@ export function QuestionNodeView(props) {
         </div> */}
         <Card shadow>
             <CardBody>
-                <label contentEditable={false} className="text-sm">Question:</label>
+                <label contentEditable={false} className="text-sm">Question</label>
                 <div className="question-node__question">
                     <Input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}
                     classNames={{
-                        input: 'border-0 outline-none focus:outline-none'
+                        input: 'border-0 outline-none focus:outline-none overflow:word-break'
                     }}
                     />
                 </div>

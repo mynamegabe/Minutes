@@ -10,6 +10,11 @@
     font-family: 'Inter', sans-serif;
 }
 
+*:focus {
+    outline: none;
+    border: none;
+}
+
 h1, h2, h3 {
     font-family: 'Lexend Deca', sans-serif;
 
@@ -72,12 +77,20 @@ button.floating-menu-button:focus {
     color: white;
 }
 
+.question-node{
+    width: 95%;
+}
 
-/* .question-node label {
-    font-weight: bold;
-} */
 
-/* .question-node input {
-    background: transparent !important;
-    width: 100%;
-} */
+.question-node label {
+    /* font-weight: bold; */
+    margin-bottom: 0.4rem;
+}
+
+button.gradient-bg {
+    transition: filter 0.15s ease-in-out;
+}
+
+button.gradient-bg:hover {
+    filter: brightness(1.1);
+}

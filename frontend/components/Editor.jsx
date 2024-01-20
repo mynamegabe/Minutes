@@ -37,7 +37,7 @@ export const Editor = () => {
     }, [isEditable, editor])
 
     return (
-        <section className="p-0 px-0">
+        <section className="py-4 px-0 min-w-7xl flex-grow">
             {/* <div>
                 <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
                 Editable
