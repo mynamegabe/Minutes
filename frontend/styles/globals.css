@@ -66,11 +66,11 @@ button.floating-menu-button:focus {
 
 .question-node {
     border-radius: 5px;
-    padding: 5px;
-    margin: 5px;
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-    /* border: black solid; */
+    padding: 10px;
+    /*margin: 5px;*/
+    /*margin-left: 0 !important;*/
+    /*padding-left: 0 !important;*/
+     border: white 1px dashed;
 }
 
 .question-node label {

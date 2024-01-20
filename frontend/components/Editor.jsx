@@ -54,6 +54,14 @@ export const Editor = () => {
                     Heading 2
                 </button>
                 <button
+                    onClick={() => {
+                        editor.commands.insertContent('<question-node question="" answer="">Hello</question-node>');
+                    }}
+                    className={editor.isActive('questionNode') ? 'is-active floating-menu-button' : 'floating-menu-button'}
+                >
+                    Question
+                </button>
+                <button
                     onClick={() => editor.chain().focus().toggleBulletList().run()}
                     className={editor.isActive('bulletList') ? 'is-active floating-menu-button' : 'floating-menu-button'}
                 >
