@@ -42,7 +42,7 @@ export default function RegisterPage() {
 				<h1 className="text-xl text-left font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
 					Create an account
 				</h1>
-				{error && <span className="text-sm text-left text-red-800">{error}</span>}
+				{error && <p className="text-sm text-left text-red-800">{error}</p>}
 				<form className="space-y-4 md:space-y-6" action="#">
 					<div>
 						<div className="mb-2 block text-left">
