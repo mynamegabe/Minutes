@@ -6,7 +6,6 @@ import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
 import React, {useEffect, useState} from "react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 
-
 export const Editor = () => {
     const editor = useEditor({
         extensions: [
@@ -23,8 +22,12 @@ export const Editor = () => {
             console.log(editor.getHTML())
         }
     });
-
     const [isEditable, setIsEditable] = useState(true)
+
+    const editableEvent = new CustomEvent('editable', {detail: isEditable})
+    useEffect(() => {
+        document.dispatchEvent(editableEvent)
+    })
     const [selectedText, setSelectedText] = useState('')
     const [mode, setMode] = useState('Notetaking') // 'Notetaking' or 'Read-only'
     useEffect(() => {
