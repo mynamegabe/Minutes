@@ -14,7 +14,7 @@ export const Editor = () => {
         This is an example of a Medium-like editor. Enter a new line and some buttons will appear.
       </p>
       <p></p>
-      <question-node question="what is 1-3?">
+      <question-node answer="3">
         <p>What is 1+2?</p>
       </question-node>
     `,

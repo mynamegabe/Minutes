@@ -38,18 +38,24 @@ import React from 'react'
 import {mergeAttributes, NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer} from "@tiptap/react";
 
 export function QuestionNodeView(props) {
+    const [userAnswer, setUserAnswer] = React.useState("");
     // const editQuestion = () => {
     //     props.updateAttributes({
     //
     //     });
     // };
     console.log(props.node.attrs.question);
+    const handleUserAnswer = (event) => {
+        setUserAnswer(event.target.value);
+    };
     return <NodeViewWrapper className={className}>
         <div>
-            <label contentEditable={false}>Question</label>
+            <label contentEditable={false}>Question:</label>
             <NodeViewContent className="question-node__question"/>
+            <br/>
+            <label contentEditable={false}>Expected Answer:</label>
             <div className="question-node__answer">
-                {/*<input type="text" value="3"/>*/}
+                <input type="text" value={userAnswer} onChange={handleUserAnswer}/>
             </div>
         </div>
     </NodeViewWrapper>
