@@ -11,3 +11,7 @@ class NoteSchema(NoteBase):
 class NoteCreate(NoteBase):
     id: str
     pass
+
+class NoteAnswers(BaseModel):
+    id: str
+    answers: list

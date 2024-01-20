@@ -39,3 +39,11 @@ def parseMCQ(text):
         }
         mcqs.append(mcq)
     return mcqs
+
+
+def extractQuestions(note_json):
+    questions = []
+    for item in note_json["items"]:
+        if item["type"] == "question":
+            questions.append(item["content"])
+    return questions
