@@ -3,7 +3,7 @@ from typing import Optional
 
 class NoteBase(BaseModel):
     title: str
-    content: Optional[list] = None
+    content: Optional[str] = None
 
 class NoteSchema(NoteBase):
     id: str
@@ -14,4 +14,4 @@ class NoteCreate(NoteBase):
 
 class NoteAnswers(BaseModel):
     id: str
-    answers: list
+    answers: str

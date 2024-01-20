@@ -9,3 +9,4 @@ ADMIN_USERNAME="admin"
 ADMIN_PASSWORD="admin"
 
 SECRET_KEY="hNr24S3cr3T"
+IMAGE_DIR="static/generated"

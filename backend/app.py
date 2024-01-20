@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 import hashlib
 import uuid
+import json
 
 from modules.database import get_db, Base, engine, Session
 from modules.authorization import authorize_user
@@ -35,7 +36,7 @@ async def lifespan(app: FastAPI):
     note = noteSchema.NoteSchema(
         id="1",
         title="Welcome to Gemini!",
-        content=[{
+        content=str([{
             "type": "heading",
             "attrs": {
                 "level": 1
@@ -46,7 +47,7 @@ async def lifespan(app: FastAPI):
                     "text": "This is a sample note. You can edit or delete this note."
                 }
             ]
-        }]
+        }])
     )
     db_note = notesController.get_note_by_id(db, 1)
     if not db_note:
@@ -68,7 +69,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -97,7 +98,7 @@ async def register(user: userSchema.UserBase, db: Session = Depends(get_db)):
     note = noteSchema.NoteSchema(
         id=str(uuid.uuid4()),
         title="Welcome to Gemini!",
-        content=[
+        content=str([
         {
             "type": "heading",
             "attrs": {
@@ -110,7 +111,7 @@ async def register(user: userSchema.UserBase, db: Session = Depends(get_db)):
                 }
             ]
         },
-        ]
+        ])
     )
     db_note = notesController.create_note(db, note)
     db_user = userController.get_user_by_username(db, user.username)
@@ -209,6 +210,7 @@ async def get_note_by_id(request: Request, note_id: str, username: str = Depends
     db = Session()
     note = notesController.get_note_by_id_and_username(db, note_id, username)
     db.close()
+    note.content = json.loads(note.content)
     return {
         "status": "success",
         "data": note,  
@@ -243,7 +245,6 @@ async def create_notes(request: Request, note: noteSchema.NoteBase, username: st
 @app.put("/api/notes/{note_id}")
 async def update_notes(request: Request, note_id: int, note: noteSchema.NoteBase, username: str = Depends(authorize_user)):
     db = Session()
-    user = userController.get_user_by_username(db, username)
     db_note = notesController.get_note_by_id_and_username(db, note_id, username)
     if not db_note:
         return {
@@ -272,6 +273,26 @@ async def generate_questions(request: Request, note_id: int, username: str = Dep
     return {
         "status": "success",
         "data": questions,
+    }
+
+
+@app.delete("/api/notes/{note_id}")
+async def delete_notes(request: Request, note_id: str, username: str = Depends(authorize_user)):
+    db = Session()
+    db_note = notesController.get_note_by_id_and_username(db, note_id, username)
+    if not db_note:
+        return {
+            "status": "error",
+            "msg": "Note not found",
+        }
+    # db_note = notesController.delete_note_by_id(db, note_id)
+    db_user = userController.get_user_by_username(db, username)
+    db_user.notes.remove(db_note)
+    db.commit()
+    db.close()
+    return {
+        "status": "success",
+        # "data": db_note,
     }
 
 

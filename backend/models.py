@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, JSON, Table, ForeignKey
+from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy.orm import relationship
 
 from modules.database import Base
@@ -23,6 +24,6 @@ class Note(Base):
     __tablename__ = "notes"
 
     id = Column(String(255), primary_key=True, index=True)
-    title = Column(String(255), index=True)
-    content = Column(JSON, index=True)
+    title = Column(String(255))
+    content = Column(LONGTEXT)
     users = relationship("User", secondary=user_notes, back_populates="notes")
