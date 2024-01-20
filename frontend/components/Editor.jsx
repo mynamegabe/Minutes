@@ -34,7 +34,8 @@ export const Editor = () => {
             {
                 editor && <BubbleMenu editor={editor} tippyOptions={{duration: 100}}>
                     <button
-                    onClick={() => setSelectedText(editor.getText())}
+                    onClick={() => setSelectedText(window.getSelection().toString())}
+                    className="bg-rose-500 hover:bg-rose-700 text-white px-2 py-1 rounded-md shadow"
                     >
                         Generate
                     </button>
