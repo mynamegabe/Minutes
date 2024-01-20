@@ -1,10 +1,24 @@
+.sidebarModal{
+    width: 100vw;  
+    height: 100vh; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+}
+
+.newPageCloseBtn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .sidebarContainer{
     position: fixed;
     top: 0;
     left: 0; 
     height: 100vh;
     width: 250px;
-    background-color: blue;
+    background-color: #191A21FF;
     padding: 12px 0;
     overflow-y: scroll;
     transform: translateX(-100%); 
@@ -19,7 +33,6 @@
 .closeBtnContainer{
     display: flex;
     justify-content: end;
-    margin-bottom: 16px
 }
 
 .closeBtnContainer:hover{
@@ -28,8 +41,10 @@
 
 .svgLogo{
     margin-right: 6px;
+    fill: white
 }
 
 .svgLogo:hover{
     cursor: pointer;
 }
+
