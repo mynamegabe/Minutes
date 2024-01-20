@@ -26,7 +26,7 @@ import {
 	HeartFilledIcon,
 } from "@/components/icons";
 
-import { Logo } from "@/components/icons";
+import { SwatchBook } from "lucide-react";
 
 export const Navbar = () => {
 
@@ -36,7 +36,7 @@ export const Navbar = () => {
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
 				<NavbarBrand as="li" className="gap-3 max-w-fit">
 					<NextLink className="flex justify-start items-center gap-1" href="/">
-						<Logo />
+						<SwatchBook />
 						<p className="font-bold text-inherit">Minutes</p>
 					</NextLink>
 				</NavbarBrand>
