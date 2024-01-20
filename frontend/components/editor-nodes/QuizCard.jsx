@@ -36,7 +36,9 @@ export function QuizCard({question, expectedAnswer}) {
     }
 
     return <Card shadow>
-        <CardBody>
+        <CardBody className={
+            userCorrect ? "bg-teal-400" : (userCorrect === false ? "bg-rose-400" : "")
+        }>
             {userCorrect !== undefined && <label contentEditable={false} className="text-sm">{userCorrect ? "Correct" : "Wrong"}</label>}
             <label contentEditable={false} className="text-sm">
                 {question}

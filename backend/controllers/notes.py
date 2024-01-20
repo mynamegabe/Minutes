@@ -48,7 +48,7 @@ def update_note(db: Session, note_id: int, note: noteSchema.NoteBase):
     return db_note
 
 
-def delete_note(db: Session, note_id: int):
+def delete_note_by_id(db: Session, note_id: int):
     db_note = db.query(noteModel).filter(noteModel.id == note_id).first()
     db.delete(db_note)
     db.commit()

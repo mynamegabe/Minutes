@@ -5,10 +5,9 @@ import { SidebarTab } from "./SidebarTab";
 import { Divider } from "@/components/Common/Divider";
 import { X, Menu, PlusCircle } from "lucide-react";
 
-import config from "@/config"
-import { getNodeTitles } from '@/logic-handling/fetchNode'
-import { getNodeById } from '@/logic-handling/fetchNodeById'
-
+import config from "@/config";
+import { getNodeTitles } from "@/logic-handling/fetchNode";
+import { getNodeById } from "@/logic-handling/fetchNodeById";
 
 import {
   Modal,
@@ -24,54 +23,60 @@ import {
 } from "@nextui-org/react";
 
 export function SidebarWrapper(props) {
-  const {activeTab, setActiveTab, activeTabData, setActiveTabData, nodeData, setNodeData } = props;
+  const {
+    activeTab,
+    setActiveTab,
+    activeTabData,
+    setActiveTabData,
+    nodeData,
+    setNodeData,
+  } = props;
 
   const [tabs, setTabs] = useState([]); // setTabs shd be called on the data fetched frm db
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [title, setTitle] = useState("");
 
-    useEffect(() => {
-        try {
-            getNodeTitles()
-            .then(tabsData => {
-                console.log("AAA")
-                console.log(tabsData)
-                setTabs(tabsData.data)
-            })
-            // const data = await titlesResx.json()
-            // console.log(data, 'data!!!')
-            
-        } catch(e){
-            console.error(e.message)
+  useEffect(() => {
+    try {
+      getNodeTitles().then((tabsData) => {
+        console.log("AAA");
+        console.log(tabsData);
+        setTabs(tabsData.data);
+      });
+      // const data = await titlesResx.json()
+      // console.log(data, 'data!!!')
+    } catch (e) {
+      console.error(e.message);
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getNodeById(tabs[activeTab].id);
+        console.log(data, "lolll");
+        if (!data.status === "success") {
+          throw new Error("Error occurred when fetching node by ID!");
         }
-    }, [])
+        setNodeData(data);
+        setActiveTabData(data.data);
+      } catch (e) {
+        console.error(e.message);
+      }
+    };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getNodeById(tabs[activeTab].id);
-                console.log(data, 'lolll');
-                if (!data.status === "success") {
-                    throw new Error('Error occurred when fetching node by ID!');
-                }
-                setNodeData(data);
-                setActiveTabData(data.data)
-            } catch (e) {
-                console.error(e.message);
-            }
-        };
-    
-        fetchData();
-    }, [activeTab]);
-    
-    const handleSidebarOpen = () => {
-        setSidebarOpen(!sidebarOpen)
-    }
+    fetchData();
+  }, [activeTab]);
 
-    const handlePageOpen = (page, tabIndex) => { // insert logic for displaying diff nodes &/ create new node
-        setActiveTab(tabIndex)
-    }
+  const handleSidebarOpen = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const handlePageOpen = (page, tabIndex) => {
+    // insert logic for displaying diff nodes &/ create new node
+    setActiveTab(tabIndex);
+  };
 
   const createNewNote = async () => {
     const body = {
@@ -89,8 +94,8 @@ export function SidebarWrapper(props) {
       .then((data) => {
         const { title, id } = data.data;
         const newObj = { title, id };
-        setTabs(tabs => [newObj, ...tabs]);      
-    });
+        setTabs((tabs) => [newObj, ...tabs]);
+      });
   };
 
   return (
@@ -110,7 +115,8 @@ export function SidebarWrapper(props) {
                   onChange={(event) => setTitle(event.target.value)}
                   variant="bordered"
                   classNames={{
-                    input: "border-0 outline-none focus:outline-none shadow-none focus:shadow-none border-none focus:border-none ",
+                    input:
+                      "border-0 outline-none focus:outline-none shadow-none focus:shadow-none border-none focus:border-none ",
                   }}
                 />
               </ModalBody>
@@ -118,7 +124,13 @@ export function SidebarWrapper(props) {
                 <Button variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={createNewNote}>
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    createNewNote();
+                    onClose();
+                  }}
+                >
                   Create
                 </Button>
               </ModalFooter>
@@ -156,7 +168,7 @@ export function SidebarWrapper(props) {
             </div>
           </div>
           <Divider />
-          <div className="p-4 flex flex-col gap-4">
+          <div className="h-sidebar p-4 flex flex-col gap-4 overflow-y-auto">
             {tabs.map((tab, index) => (
               <SidebarTab
                 key={index}

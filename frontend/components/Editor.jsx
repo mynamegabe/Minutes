@@ -138,11 +138,11 @@ export const Editor = ({data, setData}) => {
     }
 
     return (
-        <section className="py-4 px-0 min-w-7xl flex-grow">
+        <section className="py-4 px-0 pr-4 min-w-7xl flex-grow">
             <Button onClick={saveNote}>Save</Button>
             <Dropdown>
                 <DropdownTrigger>
-                    <Button variant="bordered">{mode}</Button>
+                    <Button variant="bordered" className="mb-2">{mode}</Button>
                 </DropdownTrigger>
                 <DropdownMenu
                     aria-label="Modes"
