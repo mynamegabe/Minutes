@@ -17,8 +17,10 @@ def get_user(db: Session, user_id: int):
 def get_user_by_username(db: Session, username: str):
     return db.query(userModel).filter(userModel.username == username).first()
 
+
 def create_user(db: Session, user: userSchema.UserCreate):
     db_user = userModel(
+        id=user.id,
         username=user.username, 
         password=user.password,
     )

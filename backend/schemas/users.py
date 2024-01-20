@@ -5,10 +5,10 @@ class UserBase(BaseModel):
     password: str
 
 class UserSchema(UserBase):
-    id: int
-    secret: str
+    id: str
 
 class UserCreate(UserBase):
+    id: str
     pass
 
 class UserLogin(BaseModel):
