@@ -55,10 +55,11 @@ export function SidebarWrapper(props) {
             try {
                 const data = await getNodeById(tabs[activeTab].id);
                 console.log(data, 'lolll');
-                if (!data.ok) {
+                if (!data.status === "success") {
                     throw new Error('Error occurred when fetching node by ID!');
                 }
                 setNodeData(data);
+                setActiveTabData(data.data)
             } catch (e) {
                 console.error(e.message);
             }
@@ -73,7 +74,6 @@ export function SidebarWrapper(props) {
 
     const handlePageOpen = (page, tabIndex) => { // insert logic for displaying diff nodes &/ create new node
         setActiveTab(tabIndex)
-        setActiveTabData(tabs[tabIndex])
     }
 
   const createNewNote = async () => {
@@ -112,10 +112,13 @@ export function SidebarWrapper(props) {
                   placeholder=""
                   onChange={(event) => setTitle(event.target.value)}
                   variant="bordered"
+                  classNames={{
+                    input: "border-0 outline-none focus:outline-none shadow-none focus:shadow-none border-none focus:border-none ",
+                  }}
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button variant="flat" onPress={onClose}>
                   Close
                 </Button>
                 <Button color="primary" onPress={createNewNote}>

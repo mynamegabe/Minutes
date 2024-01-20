@@ -45,6 +45,7 @@ export const Editor = ({data}) => {
     // }).catch((error) => {
     //     console.log(error)
     function updateNotesOnDb(editor) {
+        return
         if (!editor) {
             return
         }
@@ -71,7 +72,8 @@ export const Editor = ({data}) => {
             StarterKit,
             QuestionNode,
         ],
-        content: content,
+        // content: content,
+        content: content ? content : [],
         // content: `
         // <h1>Title</h1>
         // <p>Theodore II Doukas Laskaris or Ducas Lascaris (Greek: Θεόδωρος Δούκας Λάσκαρις, romanized: Theodōros Doukas Laskaris; November 1221/1222 – 16 August 1258) was Emperor of Nicaea from 1254 to 1258. He was the only child of Emperor John III Doukas Vatatzes and Empress Irene Laskarina. His mother was the eldest daughter of Theodore I Laskaris, who had established the Empire of Nicaea as a successor state to the Byzantine Empire in Asia Minor after the crusaders captured the Byzantine capital, Constantinople, during the Fourth Crusade in 1204. Theodore received an excellent education from two renowned scholars, Nikephoros Blemmydes and George Akropolites. He made friends with young intellectuals, especially with a page of low birth, George Mouzalon. Theodore began to write treatises on theological, historical and philosophical themes in his youth.</p>
