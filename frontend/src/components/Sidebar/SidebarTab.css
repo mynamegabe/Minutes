@@ -1,0 +1,14 @@
+.tabContainer{
+    padding: 0 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.tabContainer:hover{
+    background-color: brown;
+}
+
+.tabName{
+    font-size: 17px;
+}
