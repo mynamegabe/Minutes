@@ -53,3 +53,8 @@ button.floating-menu-button:focus {
 .question-node label {
     font-weight: bold;
 }
+
+.question-node input {
+    background: transparent !important;
+    width: 100%;
+}

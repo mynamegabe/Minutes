@@ -17,12 +17,16 @@ export const QuestionNode = Node.create({
         return {
             question: {
                 default: "Question?",
-                // parseHTML: element => {
-                //     return {
-                //         question: element.getAttribute('question'),
-                //     }
-                // },
+                parseHTML: element => {
+                    return element.getAttribute('question')
+                },
             },
+            answer: {
+                default: "",
+                parseHTML: element => {
+                    return element.getAttribute('answer')
+                },
+            }
         }
     },
     renderHTML({HTMLAttributes}) {
@@ -38,20 +42,29 @@ import React from 'react'
 import {mergeAttributes, NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer} from "@tiptap/react";
 
 export function QuestionNodeView(props) {
-    const [userAnswer, setUserAnswer] = React.useState("");
+    const [question, setQuestion] = React.useState(props.node.attrs.question);
+    const [userAnswer, setUserAnswer] = React.useState(props.node.attrs.answer);
     // const editQuestion = () => {
     //     props.updateAttributes({
     //
     //     });
     // };
     console.log(props.node.attrs.question);
+    const handleUserQuestion = (event) => {
+        props.updateAttributes({
+            question: event.target.value
+        });
+    };
     const handleUserAnswer = (event) => {
         setUserAnswer(event.target.value);
     };
     return <NodeViewWrapper className={className}>
         <div>
             <label contentEditable={false}>Question:</label>
-            <NodeViewContent className="question-node__question"/>
+            <div className="question-node__question">
+                <input type="text" value={question} onChange={handleUserQuestion}/>
+            </div>
+            {/*<NodeViewContent className="question-node__question"/>*/}
             <br/>
             <label contentEditable={false}>Expected Answer:</label>
             <div className="question-node__answer">

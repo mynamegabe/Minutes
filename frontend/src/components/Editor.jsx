@@ -11,8 +11,7 @@ export const Editor = () => {
         ],
         content: `
         <h1>Title</h1>
-        <question-node answer="3">
-            <p>What is 1+2?</p>
+        <question-node question="What is 1+2?" answer="3">
         </question-node>
         `,
     });
