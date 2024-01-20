@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
-import { Nav } from '../components/Navbar'
 import config from '../config'
 
 export function Login() {
