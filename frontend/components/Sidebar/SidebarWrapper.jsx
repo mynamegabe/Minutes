@@ -5,16 +5,29 @@ import { SidebarTab } from "./SidebarTab";
 import { Divider } from "@/components/Common/Divider";
 import { X, Menu, PlusCircle } from "lucide-react";
 
-import { Button } from "@nextui-org/button";
-
 import config from "@/config";
 import { getNodeTitles } from "@/logic-handling/fetchNode";
+
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Checkbox,
+  Input,
+  Link,
+} from "@nextui-org/react";
 
 export function SidebarWrapper(props) {
   const { activeTab, setActiveTab } = props;
 
   const [tabs, setTabs] = useState([]); // setTabs shd be called on the data fetched frm db
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     try {
@@ -42,9 +55,56 @@ export function SidebarWrapper(props) {
     setActiveTab(tabIndex);
   };
 
+  const createNewNote = async () => {
+    const body = {
+      title: title,
+      content: [],
+    };
+
+    const res = await fetch(`${config.API_URL}/api/notes`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { title, id } = data.data;
+        const newObj = { title, id };
+        setTabs(tabs => [newObj, ...tabs]);      
+    });
+  };
+
   return (
     <>
-      {" "}
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                New Note
+              </ModalHeader>
+              <ModalBody>
+                <Input
+                  autoFocus
+                  label="Title"
+                  placeholder=""
+                  onChange={(event) => setTitle(event.target.value)}
+                  variant="bordered"
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={createNewNote}>
+                  Create
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
       {sidebarOpen ? (
         <div
           className={`py-0 px-0 m-0 dark:border-gray-500 border-r sidebarContainer ${
@@ -62,9 +122,7 @@ export function SidebarWrapper(props) {
                         </SidebarTab>   */}
             <Button
               // variant='solid'
-              onClick={() => {
-                handlePageOpen("new");
-              }}
+              onClick={onOpen}
               className="gradient-bg button border-0"
             >
               New Note <PlusCircle size={16} />
