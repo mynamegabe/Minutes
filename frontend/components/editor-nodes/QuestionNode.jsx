@@ -79,7 +79,7 @@ export function QuestionNodeView(props) {
                         <div className="question-node__question">
                             <Input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}
                                    classNames={{
-                                       input: 'border-0 outline-none focus:outline-none'
+                                       input: 'border-0 outline-none focus:outline-none overflow:word-break'
                                    }}
                             />
                         </div>
@@ -88,7 +88,7 @@ export function QuestionNodeView(props) {
                         <div className="question-node__answer">
                             <Input type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}
                                    classNames={{
-                                       input: 'border-0 outline-none focus:outline-none'
+                                       input: 'border-0 outline-none focus:outline-none overflow:word-break'
                                    }}/>
                         </div>
                     </CardBody>
