@@ -11,8 +11,9 @@ import config from "@/config"
 import { getNodeTitles } from '@/logic-handling/fetchNode'
 
 export function SidebarWrapper(props) {
+    const {activeTab, setActiveTab } = props;
+
     const [tabs, setTabs] = useState([]) // setTabs shd be called on the data fetched frm db
-    const [activeTab, setActiveTab] = useState(0)
     const [sidebarOpen, setSidebarOpen] = useState(true)
 
     useEffect(() => {
@@ -82,7 +83,7 @@ export function SidebarWrapper(props) {
                     </div>
                 </div>
                 :
-                <div className={`sidebarContainer ${sidebarOpen && 'sidebarOpen'} ${!sidebarOpen && 'sidebarIcon'}`} onClick={handleSidebarOpen}><Menu size={24} className="editorMenu"/></div>
+                <div className={`sidebarContainer p-4 ${sidebarOpen && 'sidebarOpen'} ${!sidebarOpen && 'sidebarIcon'}`} onClick={handleSidebarOpen}><Menu size={24} className="editorMenu"/></div>
             }   
         </>
     );

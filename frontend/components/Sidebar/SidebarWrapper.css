@@ -9,7 +9,7 @@
     /* top: 0; */
     /* left: 0;  */
     height: 100vh;
-    width: 40px;
+    /* width: 60px; */
     /* background-color: black; */
     /* padding: 12px; */
     /* overflow: hidden; */
@@ -28,7 +28,7 @@
     /* transform-origin: top right; */
 }
 
-.sidebarContainer.sidebarIcon{
+/* .sidebarContainer.sidebarIcon{
     display: flex;
     justify-content: center;
     padding: 6px;
@@ -36,7 +36,7 @@
 
 .sidebarContainer.sidebarIcon svg{
     margin-top: 12px;
-}
+} */
 
 .closeBtnContainer{
     display: flex;
@@ -55,8 +55,6 @@
 .svgLogo:hover{
     cursor: pointer;
 }
-
-
 
 .editorMenu {
     cursor: pointer; 

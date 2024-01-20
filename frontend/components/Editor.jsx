@@ -9,7 +9,9 @@ import {Card, CardBody} from "@nextui-org/react";
 
 import config from "@/config.jsx";
 
-export const Editor = () => {
+export const Editor = (props) => {
+    const {activeTab, setActiveTab } = props;
+
     const editor = useEditor({
         extensions: [
             StarterKit,
