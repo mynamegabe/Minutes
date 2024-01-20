@@ -4,7 +4,7 @@ export default function AboutLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<section className="flex flex-row px-0 gap-4 py-0 border-t dark:border-gray-500">
+		<section className="flex flex-row px-0 gap-0 py-0 border-t dark:border-gray-500">
 			{children}
 		</section>
 	);

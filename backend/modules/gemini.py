@@ -62,10 +62,11 @@ def generateMCQ(content, questions_n=1, options_n=4):
 
 def verifyAnswer(question, answer, expected):
   prompt_parts = [
-    question,
+    "Q: " + question,
     "\nA: " + answer,
     "\nExpected: " + expected,
     "\nIf the answer is correct, reply with 'correct'. Otherwise, reply with 'incorrect'."
   ]
   response = model.generate_content(prompt_parts)
+  print(response.prompt_feedback)
   return response.text == "correct"

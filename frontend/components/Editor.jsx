@@ -15,10 +15,12 @@ import {
     DropdownMenu,
     DropdownItem,
     Button,
+    Spinner
 } from "@nextui-org/react";
 import {Card, CardBody} from "@nextui-org/react";
 import {QuizCard} from "./editor-nodes/QuizCard.jsx";
 
+import { ChevronDown } from 'lucide-react';
 import config from "@/config.jsx";
 
 // enum Mode
@@ -40,7 +42,6 @@ export const Editor = ({data, setData}) => {
             console.log("editor is null")
             return
         }
-        console.log("datadata", title, editor.getJSON().content)
         const data = {
             title: title,
             content: JSON.stringify(editor ? editor.getJSON().content : []),
@@ -52,7 +53,8 @@ export const Editor = ({data, setData}) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         }).then((response) => {
-            return response.json()
+            // return response.json()
+            console.log("SAVED")
         }).then((data) => {
             console.log("PUT", data)
         }).catch((error) => {
@@ -93,6 +95,7 @@ export const Editor = ({data, setData}) => {
     });
     const [selectedText, setSelectedText] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isAILoading, setIsAILoading] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [mode, setMode] = useState(modes.NOTETAKING); // 'Notetaking' or 'Read-Only'
     useEffect(() => {
@@ -103,6 +106,41 @@ export const Editor = ({data, setData}) => {
     }, [isEditable, editor]);
 
     console.log(questions);
+
+    const generateSummary = async () => {
+        setIsAILoading(true);
+        let content = editor.getJSON().content;
+        console.log("AAAAA")
+        console.log(content)
+        let final_content = "";
+        for (let i = 0; i < content.length; i++) {
+            console.log(content[i]);
+            if (content[i].content) {
+                for (let j = 0; j < content[i].content.length; j++) {
+                   final_content += content[i].content[j].text;
+                }
+            }
+        }
+        console.log("final_content", final_content)
+        const body = {
+            query: final_content,
+            type: "summary",
+        };
+        fetch(`${config.API_URL}/api/generate`, {
+            method: "POST",
+            credentials: "include",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data.data);
+                // TODO: add questions to editor and remove setQuestions
+                // setSummary(data.data);
+                setIsAILoading(false);
+                editor.commands.insertContent(`<p>${data.data}</p>`);
+            });
+    };
 
     const generateQuestions = async (content) => {
         const body = {
@@ -138,26 +176,54 @@ export const Editor = ({data, setData}) => {
     }
 
     return (
-        <section className="py-4 px-0 pr-4 min-w-7xl flex-grow">
-            <Button onClick={saveNote}>Save</Button>
-            <Dropdown>
-                <DropdownTrigger>
-                    <Button variant="bordered" className="mb-2">{mode}</Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                    aria-label="Modes"
-                    onAction={(key) => {
-                        setMode(key);
-                        setIsEditable(key === modes.NOTETAKING);
-                    }}
-                >
-                    <DropdownItem key={modes.NOTETAKING}>{modes.NOTETAKING}</DropdownItem>
-                    <DropdownItem key={modes.READ_ONLY}>{modes.READ_ONLY}</DropdownItem>
-                    <DropdownItem key={modes.QUIZ_MODE}>{modes.QUIZ_MODE}</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
+        <section className="px-0 min-w-7xl flex-grow">
+            <div className="flex p-4 gap-4 sticky top-16 z-50 w-full backdrop-blur-lg bg-stone-200/50 dark:bg-neutral-950/60">
+                <Button className="gradient-bg" type="button" onClick={saveNote}>Save</Button>
+                <Dropdown>
+                    <DropdownTrigger>
+                        <Button variant="bordered" className="mb-0">AI {isAILoading ? <Spinner size="sm" color="default" labelColor="foreground"/> : <ChevronDown size={16}/>}</Button>
+                    </DropdownTrigger>
+                    <DropdownMenu
+                        aria-label="AI"
+                        onAction={(key) => {
+                            switch (key) {
+                                case "Summary":
+                                    generateSummary()
+                                    break;
+                                case "Image Generation":
+                                    console.log("Image Generation")
+                                    break;
+                                default:
+                                    console.log("default")
+                                    break;
+                            }
+                        }
+                        }
+                    >
+                        <DropdownItem key={"Summary"}>Generate Summary</DropdownItem>
+                        <DropdownItem key={"Image"}>Generate Image</DropdownItem>
+                        {/* <DropdownItem key={modes.QUIZ_MODE}>{modes.QUIZ_MODE}</DropdownItem> */}
+                    </DropdownMenu>
+                </Dropdown>
+                <Dropdown>
+                    <DropdownTrigger>
+                        <Button variant="bordered" className="mb-0">{mode} <ChevronDown size={16}/></Button>
+                    </DropdownTrigger>
+                    <DropdownMenu
+                        aria-label="Modes"
+                        onAction={(key) => {
+                            setMode(key);
+                            setIsEditable(key === modes.NOTETAKING);
+                        }}
+                    >
+                        <DropdownItem key={modes.NOTETAKING}>{modes.NOTETAKING}</DropdownItem>
+                        <DropdownItem key={modes.READ_ONLY}>{modes.READ_ONLY}</DropdownItem>
+                        <DropdownItem key={modes.QUIZ_MODE}>{modes.QUIZ_MODE}</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
 
-            <div>
+            <div className="px-4">
                 <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>

@@ -92,9 +92,7 @@ export function SidebarWrapper(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        const { title, id } = data.data;
-        const newObj = { title, id };
-        setTabs((tabs) => [newObj, ...tabs]);
+        setTabs(data.data)
       });
   };
 
@@ -176,6 +174,8 @@ export function SidebarWrapper(props) {
                 onClick={() => {
                   handlePageOpen(tab.title, index);
                 }}
+                tabId={tab.id}
+                setTabs={setTabs}
               >
                 {tab.title}
               </SidebarTab>
