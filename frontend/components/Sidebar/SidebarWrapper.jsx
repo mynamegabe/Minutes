@@ -24,7 +24,7 @@ import {
 } from "@nextui-org/react";
 
 export function SidebarWrapper(props) {
-    const {activeTab, setActiveTab, activeTabData, setActiveTabData, nodeData, setNodeData } = props;
+  const {activeTab, setActiveTab, activeTabData, setActiveTabData, nodeData, setNodeData } = props;
 
   const [tabs, setTabs] = useState([]); // setTabs shd be called on the data fetched frm db
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -39,9 +39,6 @@ export function SidebarWrapper(props) {
                 console.log(tabsData)
                 setTabs(tabsData.data)
             })
-            if (!titlesRes.ok){
-                throw new Error('Error occured when fetching node titles!')
-            }
             // const data = await titlesResx.json()
             // console.log(data, 'data!!!')
             
