@@ -92,7 +92,8 @@ export function SidebarWrapper(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setTabs(data.data)
+        setTabs([...tabs, data.data]);
+        // setTabs(data.data)
       });
   };
 

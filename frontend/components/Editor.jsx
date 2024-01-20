@@ -22,6 +22,7 @@ import {
 } from "@nextui-org/react";
 import {Card, CardBody} from "@nextui-org/react";
 import {QuizCard} from "./editor-nodes/QuizCard.jsx";
+import {Notification} from "@/components/Notification.jsx"
 
 import {ChevronDown} from 'lucide-react';
 import config from "@/config.jsx";
@@ -102,6 +103,8 @@ export const Editor = ({data, setData}) => {
     const [isQuestionGenerationLoading, setIsQuestionGenerationLoading] = useState(false);
     const [isAILoading, setIsAILoading] = useState(false);
     const [questions, setQuestions] = useState([]);
+    const [imageLoaded, setImageLoaded] = useState(false);
+    const [notification, setNotification] = useState("");
     const [mode, setMode] = useState(modes.NOTETAKING); // 'Notetaking' or 'Read-Only'
     const [searchQuestion, setSearchQuestion] = useState("");
     const [searchResult, setSearchResult] = useState("")
@@ -159,7 +162,6 @@ export const Editor = ({data, setData}) => {
                 }
             }
         }
-        console.log("final_content", final_content)
         const body = {
             id: id,
             content: final_content,
@@ -173,6 +175,7 @@ export const Editor = ({data, setData}) => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data.data);
+                setNotification(data.data.msg);
                 setIsAILoading(false);
                 // editor.commands.insertContent(`<p>${data.data}</p>`);
             });
@@ -338,8 +341,21 @@ export const Editor = ({data, setData}) => {
                 <Button className="gradient-bg" type="button" onClick={saveNote}>Save</Button>
             </div>
 
-            <div className="px-4">
-
+            <div className="px-4 pt-4">
+                <Image
+                width={10000}
+                height={240}
+                src={config.API_URL + "/static/generated/" + id + ".png"}
+                // fallbackSrc="https://via.placeholder.com/300x200"
+                alt="NextUI Image with fallback"
+                classNames={{
+                    wrapper: `w-full max-w-full mt-0 mb-2 ${imageLoaded ? 'block' : 'hidden'}`,
+                    img: 'rounded-md w-full object-cover h-60'
+                }}
+                onLoad={() => {
+                    setImageLoaded(true)
+                }}
+                />
                 <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
@@ -445,6 +461,7 @@ export const Editor = ({data, setData}) => {
                         <EditorContent editor={editor}/>
                 )}
             </div>
+            {notification && <Notification message={notification} setMessage={setNotification} />}
         </section>
     );
 };

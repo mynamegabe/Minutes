@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI, Request, BackgroundTasks
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -75,6 +76,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 async def index():
@@ -337,7 +339,6 @@ async def generate_image(request: Request, background_tasks: BackgroundTasks, No
     db.close()
     filename = os.path.join(config.IMAGE_DIR, f"{note_id}.png")
     prompt = gemini.generatePrompt(db_note.content)
-    # imagegen.generateImage(prompt, filename=filename)
     background_tasks.add_task(imagegen.generateImage, prompt, filename=filename)
     return {
         "status": "success",
