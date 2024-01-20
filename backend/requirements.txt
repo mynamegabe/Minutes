@@ -9,3 +9,8 @@ python-multipart
 opencv-python
 werkzeug
 ipython
+diffusers
+invisible_watermark
+transformers
+accelerate
+safetensors

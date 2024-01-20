@@ -9,9 +9,11 @@ import { Button } from '@nextui-org/button';
 
 import config from "@/config"
 import { getNodeTitles } from '@/logic-handling/fetchNode'
+import { getNodeById } from '@/logic-handling/fetchNodeById'
+
 
 export function SidebarWrapper(props) {
-    const {activeTab, setActiveTab } = props;
+    const {activeTab, setActiveTab, nodeData, setNodeData } = props;
 
     const [tabs, setTabs] = useState([]) // setTabs shd be called on the data fetched frm db
     const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -34,6 +36,23 @@ export function SidebarWrapper(props) {
             console.error(e.message)
         }
     }, [])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getNodeById(activeTab);
+                console.log(data, 'lolll');
+                if (!data.ok) {
+                    throw new Error('Error occurred when fetching node by ID!');
+                }
+                setNodeData(data);
+            } catch (e) {
+                console.error(e.message);
+            }
+        };
+    
+        fetchData();
+    }, [activeTab]);
     
     const handleSidebarOpen = () => {
         setSidebarOpen(!sidebarOpen)
@@ -46,7 +65,7 @@ export function SidebarWrapper(props) {
     return (
         <>  {sidebarOpen ? 
 
-                <div className={`py-0 px-0 m-0 dark:border-gray-500 border-r sidebarContainer ${sidebarOpen && 'sidebarOpen'}`} onClick={(e)=>{e.stopPropagation()}}>
+                <div className={`py-0 px-0 m-0 sticky top-16 dark:border-gray-500 border-r sidebarContainer ${sidebarOpen && 'sidebarOpen'}`} onClick={(e)=>{e.stopPropagation()}}>
                     <div className='newPageCloseBtn p-4'>
                         {/* <SidebarTab 
                         onClick={()=>{handlePageOpen('new')}}

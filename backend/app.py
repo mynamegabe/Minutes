@@ -35,7 +35,18 @@ async def lifespan(app: FastAPI):
     note = noteSchema.NoteSchema(
         id="1",
         title="Welcome to Gemini!",
-        content="This is a sample note. You can edit or delete this note.",
+        content=[{
+            "type": "heading",
+            "attrs": {
+                "level": 1
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "This is a sample note. You can edit or delete this note."
+                }
+            ]
+        }]
     )
     db_note = notesController.get_note_by_id(db, 1)
     if not db_note:
@@ -83,6 +94,27 @@ async def register(user: userSchema.UserBase, db: Session = Depends(get_db)):
         password=hashed,
     )
     userController.create_user(db=db, user=new_user)
+    note = noteSchema.NoteSchema(
+        id=str(uuid.uuid4()),
+        title="Welcome to Gemini!",
+        content=[
+        {
+            "type": "heading",
+            "attrs": {
+                "level": 1
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "This is a sample note. You can edit or delete this note."
+                }
+            ]
+        },
+        ]
+    )
+    db_note = notesController.create_note(db, note)
+    db_user = userController.get_user_by_username(db, user.username)
+    db_user.notes.append(db_note)
     return {
         "status": "success",
         "msg": "User created successfully!",

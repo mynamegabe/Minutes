@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardBody, Input} from "@nextui-org/react";
+import {Card, CardBody, Input, Button} from "@nextui-org/react";
 import config from "@/config";
 
 export function QuizCard({question, expectedAnswer}) {
@@ -50,7 +50,7 @@ export function QuizCard({question, expectedAnswer}) {
                    }}/>
             {/*<div className="question-node__answer">*/}
             {/*</div>*/}
-                <button type="submit">Submit</button>
+                <Button type="submit" className="mt-4" color="primary">Submit</Button>
             </form>
         </CardBody>
     </Card>;

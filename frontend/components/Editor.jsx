@@ -22,7 +22,7 @@ import { QuizCard } from "./editor-nodes/QuizCard.jsx";
 import config from "@/config.jsx";
 
 export const Editor = (props) => {
-    const {activeTab, setActiveTab } = props;
+    const {activeTab } = props;
 
     const editor = useEditor({
         extensions: [
@@ -56,10 +56,6 @@ export const Editor = (props) => {
       editor.setEditable(isEditable);
     }
 
-    // document.querySelectorAll('question-node').forEach((node) => {
-    //     node.setAttribute('disabled', false)
-    //     node.setAttribute('contentEditable', false)
-    // })
   }, [isEditable, editor]);
 
   console.log(questions);
@@ -88,10 +84,10 @@ export const Editor = (props) => {
   };
 
   return (
-    <section className="py-4 px-0 min-w-7xl flex-grow">
+    <section className="py-4 px-0 pr-4 min-w-7xl flex-grow">
       <Dropdown>
         <DropdownTrigger>
-          <Button variant="bordered">{mode}</Button>
+          <Button variant="bordered" className="mb-2">{mode}</Button>
         </DropdownTrigger>
         <DropdownMenu
           aria-label="Modes"
@@ -132,16 +128,20 @@ export const Editor = (props) => {
         )}
         {editor && (
           <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
-            <Card>
+            <Card className="py-1">
               <CardBody>
+                <p className="text-xs px-2">MENU</p>
                 <button
                   onClick={() =>
                     editor.chain().focus().toggleHeading({ level: 1 }).run()
                   }
-                  className={
+                  className={`${
                     editor.isActive("heading", { level: 1 })
                       ? "is-active floating-menu-button"
                       : "floating-menu-button"
+                    }
+                     text-left px-2 hover:brightness-75
+                    `
                   }
                 >
                   Heading 1
@@ -150,11 +150,13 @@ export const Editor = (props) => {
                   onClick={() =>
                     editor.chain().focus().toggleHeading({ level: 2 }).run()
                   }
-                  className={
+                  className={`${
                     editor.isActive("heading", { level: 2 })
                       ? "is-active floating-menu-button"
                       : "floating-menu-button"
                   }
+                    text-left px-2 hover:brightness-75
+                    `}
                 >
                   Heading 2
                 </button>
@@ -164,11 +166,13 @@ export const Editor = (props) => {
                       '<question-node question="" answer="">Hello</question-node><br class="ProseMirror-trailingBreak">'
                     );
                   }}
-                  className={
+                  className={`${
                     editor.isActive("questionNode")
                       ? "is-active floating-menu-button"
                       : "floating-menu-button"
-                  }
+                    }
+                    text-left px-2 hover:brightness-75
+                    `}
                 >
                   Question
                 </button>
@@ -176,11 +180,13 @@ export const Editor = (props) => {
                   onClick={() =>
                     editor.chain().focus().toggleBulletList().run()
                   }
-                  className={
+                  className={`${
                     editor.isActive("bulletList")
                       ? "is-active floating-menu-button"
                       : "floating-menu-button"
-                  }
+                    }
+                    text-left px-2 hover:brightness-75
+                    `}  
                 >
                   Bullets
                 </button>

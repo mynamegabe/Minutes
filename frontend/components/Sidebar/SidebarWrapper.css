@@ -8,7 +8,7 @@
     /* position: fixed; */
     /* top: 0; */
     /* left: 0;  */
-    height: 100vh;
+    height: calc(100vh - 64px);
     /* width: 60px; */
     /* background-color: black; */
     /* padding: 12px; */

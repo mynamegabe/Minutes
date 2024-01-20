@@ -1,6 +1,6 @@
 import config from "../config"
 
-export const getNodeId = async (id) => {
+export const getNodeById = async (id) => {
     const res = await fetch(`${config.API_URL}/api/notes/${id}`, {
         method: 'GET',
         credentials: 'include',

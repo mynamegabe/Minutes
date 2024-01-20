@@ -16,13 +16,13 @@ export function SidebarTab (props) {
         // </div>
         <Button
         variant='solid'
-        className={`tabContainer w-full rounded-md dark:bg-neutral-950 bg-stone-200 ${active ? 'active' : ''} `}
+        className={`tabContainer items-start w-full rounded-md dark:bg-neutral-950 bg-stone-200 ${active ? 'active' : ''} `}
         onClick={onClick}
         >
-            <span className={`tabName text-sm text-slate-950 dark:text-white ${active ? "text-white" : ""}`}>
+            <span className={`tabName text-left text-sm text-slate-950 dark:text-white ${active ? "text-white" : ""}`}>
                 {children}
             </span>
-            <span className='tabIcon text-sm text-slate-950 dark:text-white'>
+            <span className='tabIcon text-left text-sm text-slate-950 dark:text-white'>
                 {tabIcon}
             </span>
         </Button>
