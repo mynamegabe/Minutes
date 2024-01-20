@@ -1,4 +1,9 @@
 import {Card, CardBody, Input} from "@nextui-org/react";
+import {Node} from '@tiptap/core'
+import React, {useEffect, useState} from 'react'
+
+import {mergeAttributes, NodeViewWrapper, ReactNodeViewRenderer} from "@tiptap/react";
+import {QuizCard} from "@/components/editor-nodes/QuizCard";
 
 const className = 'question-node';
 export const QuestionNode = Node.create({
@@ -37,12 +42,22 @@ export const QuestionNode = Node.create({
         return ReactNodeViewRenderer(QuestionNodeView);
     }
 })
-import {Node} from '@tiptap/core'
-import React from 'react'
-
-import {mergeAttributes, NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer} from "@tiptap/react";
 
 export function QuestionNodeView(props) {
+    const [editable, setEditable] = useState(true);
+
+    function isEditableListener(event) {
+        setEditable(event.detail)
+    }
+    ;
+
+    useEffect(() => {
+        // listen to custom event
+        document.addEventListener('editable', isEditableListener)
+        return () => {
+            document.removeEventListener('editable', isEditableListener)
+        }
+    }, [props.node.editor, props.node.attrs.question, props.node.attrs.answer]);
     const handleUserQuestion = (event) => {
         props.updateAttributes({
             question: event.target.value
@@ -54,36 +69,31 @@ export function QuestionNodeView(props) {
         });
     };
     return <NodeViewWrapper className={className}>
-        {/* <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md p-2 dark:bg-[#0B0508] dark:border-white">
-            <label contentEditable={false}>Question:</label>
-            <div className="question-node__question">
-                <input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}/>
-            </div>
-            <br/>
-            <label contentEditable={false}>Expected Answer:</label>
-            <div className="question-node__answer">
-                <input type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}/>
-            </div>
-        </div> */}
-        <Card shadow>
-            <CardBody>
-                <label contentEditable={false} className="text-sm">Question</label>
-                <div className="question-node__question">
-                    <Input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}
-                    classNames={{
-                        input: 'border-0 outline-none focus:outline-none overflow:word-break'
-                    }}
-                    />
-                </div>
-                <br/>
-                <label contentEditable={false} className="text-sm">Answer</label>
-                <div className="question-node__answer">
-                    <Input type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}
-                    classNames={{
-                        input: 'border-0 outline-none focus:outline-none'
-                    }}/>
-                </div>
-            </CardBody>
-        </Card>
+        {editable && <h1>editable</h1>}
+        {!editable && <h1>not editable</h1>}
+        {
+            editable ?
+                <Card shadow>
+                    <CardBody>
+                        <label contentEditable={false} className="text-sm">Question:</label>
+                        <div className="question-node__question">
+                            <Input type="text" value={props.node.attrs.question} onChange={handleUserQuestion}
+                                   classNames={{
+                                       input: 'border-0 outline-none focus:outline-none'
+                                   }}
+                            />
+                        </div>
+                        <br/>
+                        <label contentEditable={false} className="text-sm">Answer</label>
+                        <div className="question-node__answer">
+                            <Input type="text" value={props.node.attrs.answer} onChange={handleUserAnswer}
+                                   classNames={{
+                                       input: 'border-0 outline-none focus:outline-none'
+                                   }}/>
+                        </div>
+                    </CardBody>
+                </Card> :
+                <QuizCard question={props.node.attrs.question} expectedAnswer={props.node.attrs.answer}/>
+        }
     </NodeViewWrapper>
 }
