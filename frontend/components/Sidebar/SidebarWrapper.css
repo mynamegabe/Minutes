@@ -12,8 +12,8 @@
     width: 40px;
     /* background-color: black; */
     /* padding: 12px; */
-    overflow: hidden;
-    transform: translateX(-100%); 
+    /* overflow: hidden; */
+    /* transform: translateX(-100%);  */
     transition: all 0.15s ease-in-out;
     /* border-right: 1px solid white; */
     /* display: flex;
@@ -22,9 +22,10 @@
 }
 
 .sidebarContainer.sidebarOpen{
-    width: 240px;
-    transform: translateX(0);
-    transform-origin: top right;
+    width: 240px !important;
+    flex-shrink: 0;
+    /* transform: translateX(0); */
+    /* transform-origin: top right; */
 }
 
 .sidebarContainer.sidebarIcon{

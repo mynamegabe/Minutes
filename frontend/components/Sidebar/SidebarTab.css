@@ -6,10 +6,10 @@
 }
 
 .tabContainer.active{
-    /* background-color: #262732; */
+    background-color: #262732 !important 
 }
 
 .tabContainer:hover{
-    /* background-color: #262732; */
+    background-color: #262732 !important;
     cursor: pointer;
 }

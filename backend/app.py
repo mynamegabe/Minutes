@@ -185,12 +185,14 @@ async def get_note_by_id(request: Request, note_id: int, username: str = Depends
 
 @app.post("/api/notes")
 async def create_notes(request: Request, note: noteSchema.NoteBase, username: str = Depends(authorize_user)):
+    note_id = str(uuid.uuid4())
     db = Session()
     db_note = noteSchema.NoteSchema(
-        id=str(uuid.uuid4()),
+        id=note_id,
         title=note.title,
         content=note.content,
     )
+    print(db_note)
     db_note = notesController.create_note(db, db_note)
     db_user = userController.get_user_by_username(db, username)
     db_user.notes.append(db_note)
@@ -198,7 +200,11 @@ async def create_notes(request: Request, note: noteSchema.NoteBase, username: st
     db.close()
     return {
         "status": "success",
-        "data": db_note,
+        "data": {
+            "id": note_id,
+            'title': note.title,
+            'content': note.content,
+        },
     }
 
 

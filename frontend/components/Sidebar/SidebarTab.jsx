@@ -19,7 +19,7 @@ export function SidebarTab (props) {
         className={`tabContainer w-full rounded-md dark:bg-neutral-950 bg-stone-200 ${active ? 'active' : ''} `}
         onClick={onClick}
         >
-            <span className='tabName text-sm text-slate-950 dark:text-white'>
+            <span className={`tabName text-sm text-slate-950 dark:text-white ${active ? "text-white" : ""}`}>
                 {children}
             </span>
             <span className='tabIcon text-sm text-slate-950 dark:text-white'>

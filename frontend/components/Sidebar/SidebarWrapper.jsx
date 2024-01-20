@@ -11,14 +11,15 @@ import config from "@/config"
 import { getNodeTitles } from '@/logic-handling/fetchNode'
 
 export function SidebarWrapper(props) {
-    const [tabs, setTabs] = useState(['a', 'b', 'c']) // setTabs shd be called on the data fetched frm db
+    const [tabs, setTabs] = useState([]) // setTabs shd be called on the data fetched frm db
     const [activeTab, setActiveTab] = useState(0)
     const [sidebarOpen, setSidebarOpen] = useState(true)
 
     useEffect(() => {
         try {
-            getNodeTitles.then(response => response.json())
+            getNodeTitles()
             .then(tabsData => {
+                console.log("AAA")
                 console.log(tabsData)
                 setTabs(tabsData.data)
             })
@@ -66,7 +67,7 @@ export function SidebarWrapper(props) {
                         </div>   
                     </div> 
                     <Divider/>
-                    <div className="p-4">
+                    <div className="p-4 flex flex-col gap-4">
                     {
                         tabs.map((tab, index) => (
                             <SidebarTab 
