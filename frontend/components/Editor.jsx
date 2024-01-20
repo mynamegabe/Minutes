@@ -1,7 +1,7 @@
-import {EditorContent, FloatingMenu, useEditor} from "@tiptap/react";
+import {BubbleMenu, EditorContent, FloatingMenu, useEditor} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 export const Editor = () => {
     const editor = useEditor({
@@ -16,8 +16,9 @@ export const Editor = () => {
         `,
     });
 
-    const [isEditable, setIsEditable] = React.useState(true)
-
+    const [isEditable, setIsEditable] = useState(true)
+    const [selectedText, setSelectedText] = useState('')
+    console.log(selectedText)
     useEffect(() => {
         if (editor) {
             editor.setEditable(isEditable)
@@ -30,6 +31,15 @@ export const Editor = () => {
                 <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
                 Editable
             </div>
+            {
+                editor && <BubbleMenu editor={editor} tippyOptions={{duration: 100}}>
+                    <button
+                    onClick={() => setSelectedText(editor.getText())}
+                    >
+                        Generate
+                    </button>
+                </BubbleMenu>
+            }
             {editor && <FloatingMenu editor={editor} tippyOptions={{duration: 100}}>
                 <button
                     onClick={() => editor.chain().focus().toggleHeading({level: 1}).run()}
@@ -48,12 +58,6 @@ export const Editor = () => {
                     className={editor.isActive('bulletList') ? 'is-active floating-menu-button' : 'floating-menu-button'}
                 >
                     Bullets
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={editor.isActive('questionNode') ? 'is-active floating-menu-button' : 'floating-menu-button'}
-                >
-                    Question
                 </button>
             </FloatingMenu>}
             <EditorContent editor={editor}/>
