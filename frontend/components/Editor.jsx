@@ -25,7 +25,7 @@ export const Editor = () => {
     }, [isEditable, editor])
 
     return (
-        <section className="p-4 px-12">
+        <section className="p-0 px-0">
             <div>
                 <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
                 Editable

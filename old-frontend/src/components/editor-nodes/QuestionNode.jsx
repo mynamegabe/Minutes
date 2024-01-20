@@ -1,3 +1,5 @@
+"use client";
+
 const className = 'question-node';
 export const QuestionNode = Node.create({
     name: 'questionNode',

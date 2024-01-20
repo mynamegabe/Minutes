@@ -1,3 +1,5 @@
+"use client";
+
 import '../style/editor.css'
 
 import React from 'react'

@@ -34,8 +34,8 @@ export default function LoginPage() {
     return (
         <>
         {/* <Nav /> */}
-            <section className="">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <section className="w-full">
+            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-full">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     Minutes    
                 </a>
@@ -48,17 +48,15 @@ export default function LoginPage() {
                         <form className="space-y-4 md:space-y-6" action="#">
                             <div>
                             <div className="mb-2 block">
-                    <Label htmlFor="username" value="Your username" />
-                    </div>
-                    <TextInput id="username" type="username" placeholder="Username" onChange={(event) => setUsername(event.target.value)} required />
-
+								<Label htmlFor="username" value="Your username" />
+								</div>
+								<TextInput id="username" type="username" placeholder="Username" onChange={(event) => setUsername(event.target.value)} required />
                             </div>
                             <div>
                             <div className="mb-2 block">
-                    <Label htmlFor="password" value="Your password" />
-                    </div>
-                    <TextInput id="password" type="password" placeholder="••••••••" onChange={(event) => setPassword(event.target.value)} required />
-
+								<Label htmlFor="password" value="Your password" />
+								</div>
+								<TextInput id="password" type="password" placeholder="••••••••" onChange={(event) => setPassword(event.target.value)} required />
                             </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-start">

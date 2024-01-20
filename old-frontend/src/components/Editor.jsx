@@ -1,3 +1,5 @@
+"use client";
+
 import {EditorContent, FloatingMenu, useEditor} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
