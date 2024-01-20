@@ -121,9 +121,11 @@ export const Editor = ({data, setData}) => {
             .then((data) => {
                 setIsLoading(false);
                 setIsEditable(true);
-                console.log(data.data);
-                // TODO: add questions to editor and remove setQuestions
-                setQuestions(data.data);
+                const entries = Object.entries(data.data[0]);
+                const [key, value] = entries[0];
+                editor.commands.insertContent(
+                    `<question-node question="${key}" answer="${value}">Hello</question-node><br class="ProseMirror-trailingBreak">`
+                );
             });
     };
 
