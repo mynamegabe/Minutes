@@ -17,12 +17,13 @@ import {
     DropdownItem,
     Button,
     Spinner,
-    Image
+    Image,
+    Input, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
 } from "@nextui-org/react";
 import {Card, CardBody} from "@nextui-org/react";
 import {QuizCard} from "./editor-nodes/QuizCard.jsx";
 
-import { ChevronDown } from 'lucide-react';
+import {ChevronDown} from 'lucide-react';
 import config from "@/config.jsx";
 
 // enum Mode
@@ -37,6 +38,7 @@ export const Editor = ({data, setData}) => {
     let {title: originalTitle, content, id} = data;
     // content = JSON.parse(content)
     const [title, setTitle] = useState(originalTitle);
+
     function updateNotesOnDb(editor) {
         if (!editor) {
             console.log("editor is null")
@@ -101,6 +103,10 @@ export const Editor = ({data, setData}) => {
     const [isAILoading, setIsAILoading] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [mode, setMode] = useState(modes.NOTETAKING); // 'Notetaking' or 'Read-Only'
+    const [searchQuestion, setSearchQuestion] = useState("");
+    const [searchResult, setSearchResult] = useState("")
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
     useEffect(() => {
         if (editor) {
             editor.setEditable(isEditable);
@@ -118,7 +124,7 @@ export const Editor = ({data, setData}) => {
             console.log(content[i]);
             if (content[i].content) {
                 for (let j = 0; j < content[i].content.length; j++) {
-                   final_content += content[i].content[j].text;
+                    final_content += content[i].content[j].text;
                 }
             }
         }
@@ -149,7 +155,7 @@ export const Editor = ({data, setData}) => {
             console.log(content[i]);
             if (content[i].content) {
                 for (let j = 0; j < content[i].content.length; j++) {
-                   final_content += content[i].content[j].text;
+                    final_content += content[i].content[j].text;
                 }
             }
         }
@@ -226,13 +232,84 @@ export const Editor = ({data, setData}) => {
         updateNotesOnDb(editor)
     }
 
+    async function search(question) {
+        setSearchResult("Loading...")
+        onOpen()
+        await fetch(`${config.API_URL}/api/generate`, {
+            method: "POST",
+            credentials: "include",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                question: question,
+                query: editor.getText({
+                    blockSeparator: "\n",
+                }),
+                type: "answer",
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setSearchResult(data.data)
+                // alert(data.data);
+                // setIsAILoading(false);
+                // editor.commands.insertContent(`<p>${data.data}</p>`);
+            })
+    }
+
+    function handleSearchChange(event) {
+        setSearchQuestion(event.target.value)
+        if (event.key === 'Enter') {
+            search(searchQuestion);
+        }
+    }
+
     return (
         <section className="px-0 min-w-7xl flex-grow">
-            <div className="flex p-4 gap-4 sticky top-16 z-50 w-full backdrop-blur-lg bg-stone-200/50 dark:bg-neutral-950/60">
-                <Button className="gradient-bg" type="button" onClick={saveNote}>Save</Button>
+            <Modal
+                isOpen={isOpen}
+                placement="top"
+                onOpenChange={onOpenChange}
+            >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">{searchQuestion}</ModalHeader>
+                            <ModalBody>
+                                {searchResult}
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Close
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+
+            <div
+                className="flex p-4 gap-4 sticky top-16 z-50 w-full backdrop-blur-lg bg-stone-200/50 dark:bg-neutral-950/60">
                 <Dropdown>
                     <DropdownTrigger>
-                        <Button variant="bordered" className="mb-0">AI {isAILoading ? <Spinner size="sm" color="default" labelColor="foreground"/> : <ChevronDown size={16}/>}</Button>
+                        <Button variant="bordered" className="mb-0">{mode} <ChevronDown size={16}/></Button>
+                    </DropdownTrigger>
+                    <DropdownMenu
+                        aria-label="Modes"
+                        onAction={(key) => {
+                            setMode(key);
+                            setIsEditable(key === modes.NOTETAKING);
+                        }}
+                    >
+                        <DropdownItem key={modes.NOTETAKING}>{modes.NOTETAKING}</DropdownItem>
+                        <DropdownItem key={modes.READ_ONLY}>{modes.READ_ONLY}</DropdownItem>
+                        <DropdownItem key={modes.QUIZ_MODE}>{modes.QUIZ_MODE}</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+                <Dropdown>
+                    <DropdownTrigger>
+                        <Button variant="bordered" className="mb-0">AI {isAILoading ?
+                            <Spinner size="sm" color="default" labelColor="foreground"/> :
+                            <ChevronDown size={16}/>}</Button>
                     </DropdownTrigger>
                     <DropdownMenu
                         aria-label="AI"
@@ -256,26 +333,13 @@ export const Editor = ({data, setData}) => {
                         {/* <DropdownItem key={modes.QUIZ_MODE}>{modes.QUIZ_MODE}</DropdownItem> */}
                     </DropdownMenu>
                 </Dropdown>
-                <Dropdown>
-                    <DropdownTrigger>
-                        <Button variant="bordered" className="mb-0">{mode} <ChevronDown size={16}/></Button>
-                    </DropdownTrigger>
-                    <DropdownMenu
-                        aria-label="Modes"
-                        onAction={(key) => {
-                            setMode(key);
-                            setIsEditable(key === modes.NOTETAKING);
-                        }}
-                    >
-                        <DropdownItem key={modes.NOTETAKING}>{modes.NOTETAKING}</DropdownItem>
-                        <DropdownItem key={modes.READ_ONLY}>{modes.READ_ONLY}</DropdownItem>
-                        <DropdownItem key={modes.QUIZ_MODE}>{modes.QUIZ_MODE}</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
+                <Input content={searchQuestion} onKeyDown={handleSearchChange} type="search"
+                       placeholder="Ask something..."></Input>
+                <Button className="gradient-bg" type="button" onClick={saveNote}>Save</Button>
             </div>
 
             <div className="px-4">
-                
+
                 <h1 contentEditable={true} onChange={handleTitleChange}>{title}</h1>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
