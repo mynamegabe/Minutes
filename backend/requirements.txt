@@ -1,0 +1,11 @@
+google-generativeai
+fastapi
+sqlalchemy
+uvicorn
+mysql-connector-python
+itsdangerous
+beautifulsoup4
+python-multipart
+opencv-python
+werkzeug
+ipython
