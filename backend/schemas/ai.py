@@ -7,3 +7,7 @@ class QueryBase(BaseModel):
 class GenerateModel(QueryBase):
     type: str
     question: Optional[str] = None
+    
+class VerifyModel(BaseModel):
+    question: str
+    answer: str

@@ -141,6 +141,14 @@ async def generate(request: Request, query: aiSchema.GenerateModel, username: st
     }
 
 
+@app.post("/api/verify")
+async def verify(request: Request, query: aiSchema.VerifyModel, username: str = Depends(authorize_user)):
+    response = gemini.verifyAnswer(query.question, query.answer)
+    return {
+        "status": "success",
+        "msg": response,
+    }
+
 @app.get("/api/users")
 async def get_users(request: Request, username: str = Depends(authorize_user)):
     db = Session()
