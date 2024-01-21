@@ -7,6 +7,7 @@ import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import config from "@/config"
 import "@/styles/globals.css";
 import { SwatchBook } from 'lucide-react';
+import React from 'react'
 
 export default function LoginPage() {
 	// const navigate = useNavigate()
@@ -14,7 +15,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
 
-    async function handleSubmit(e) {
+    async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
         e.preventDefault()
         const res = await fetch(`${config.API_URL}/login`, {
             method: 'POST',
@@ -37,7 +38,7 @@ export default function LoginPage() {
         <>
         {/* <Nav /> */}
             <section className="w-full h-full">
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0 w-full">
+            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0 w-full">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     <SwatchBook size={40} />
                 </a>

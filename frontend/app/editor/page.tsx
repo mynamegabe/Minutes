@@ -2,7 +2,7 @@
 import React, {useState } from 'react'
 import { title } from "@/components/primitives";
 import "@/styles/globals.css";
-import { Editor } from "@/components/editor";
+import { Editor } from "@/components/Editor";
 
 import { SidebarWrapper } from '@/components/Sidebar/SidebarWrapper'
 
