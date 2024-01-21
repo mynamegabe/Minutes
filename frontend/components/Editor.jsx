@@ -301,7 +301,7 @@ export const Editor = ({ data, setData }) => {
     }
 
     return (
-        <section className="px-0 min-w-7xl flex-grow">
+        <section className="px-0 flex-grow">
             <Modal
                 isOpen={isSearchModalOpen}
                 placement="top"
