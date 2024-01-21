@@ -470,38 +470,37 @@ export const Editor = ({ data, setData }) => {
               Editable
           </div> */}
 
-        {editor && (
-          <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-            {!isQuestionGenerationLoading ? (
-              <button
-                onClick={() =>
-                  generateQuestions(window.getSelection().toString())
-                }
-                className="bg-rose-500 hover:bg-rose-700 text-white px-2 py-1 rounded-md shadow"
-              >
-                Generate Questions
-              </button>
-            ) : (
-              <Button color="primary" isLoading>
-                Loading
-              </Button>
-            )}
-          </BubbleMenu>
-        )}
-        {editor && (
-          <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
-            <Card>
-              <CardBody>
-                <p className="text-lg px-2 underline font-bold mb-1">MENU</p>
-                <button
-                  onClick={() =>
-                    editor.chain().focus().toggleHeading({ level: 1 }).run()
-                  }
-                  className={`${
-                    editor.isActive("heading", { level: 1 })
-                      ? "is-active floating-menu-button"
-                      : "floating-menu-button"
-                  }
+                {editor && (
+                    <BubbleMenu editor={editor} tippyOptions={{duration: 100}}>
+                        {!isQuestionGenerationLoading ? (
+                            <button
+                                onClick={() =>
+                                    generateQuestions(window.getSelection().toString())
+                                }
+                                className="bg-rose-500 hover:bg-rose-700 text-white px-2 py-1 rounded-md shadow"
+                            >
+                                Generate Questions
+                            </button>
+                        ) : (
+                            <Button color="primary" isLoading>
+                                Loading
+                            </Button>
+                        )}
+                    </BubbleMenu>
+                )}
+                {editor && (
+                    <FloatingMenu editor={editor} tippyOptions={{duration: 100}}>
+                        <Card>
+                            <CardBody>
+                                <button
+                                    onClick={() =>
+                                        editor.chain().focus().toggleHeading({level: 1}).run()
+                                    }
+                                    className={`${
+                                        editor.isActive("heading", {level: 1})
+                                            ? "is-active floating-menu-button"
+                                            : "floating-menu-button"
+                                    }
                                      text-left text-sm px-2 py-1 hover:brightness-75
                                     `}
                 >
