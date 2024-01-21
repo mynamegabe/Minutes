@@ -10,7 +10,7 @@
 }
 
 .sidebarContainer.sidebarOpen{
-    width: 240px !important;
+    width: 220px !important;
     flex-shrink: 0;
 }
 
