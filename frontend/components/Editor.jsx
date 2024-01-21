@@ -496,11 +496,14 @@ export const Editor = ({ data, setData }) => {
           <div>
             {editor &&
               getHTMLQns(editor.getHTML()).map((question, index) => (
-                <QuizCard
-                  key={index}
-                  question={question.getAttribute('question')}
-                  expectedAnswer={question.getAttribute('answer')}
-                />
+                <div>
+                  <QuizCard
+                    key={index}
+                    question={question.getAttribute("question")}
+                    expectedAnswer={question.getAttribute("answer")}
+                  />
+                  <br />
+                </div>
               ))}
           </div>
         ) : (
