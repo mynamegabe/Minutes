@@ -342,8 +342,7 @@ export const Editor = ({ data, setData }) => {
                                 <Button color="primary" variant="light" onPress={() => {
                                     editor.commands.setImage({
                                         src: imageSrc,
-                                        alt: 'A boring example image',
-                                        // title: 'An example'
+                                        alt: '',
                                     })
                                     onClose()
                                     setImageSrc("")
