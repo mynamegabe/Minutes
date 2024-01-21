@@ -7,7 +7,7 @@ import {
     useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-// import Image from "@tiptap/extension-image";
+import TiptapImage from "@tiptap/extension-image";
 import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
 import React, {useEffect, useState} from "react";
 import {
@@ -70,9 +70,10 @@ export const Editor = ({data, setData}) => {
         extensions: [
             StarterKit,
             QuestionNode,
-            // Image.configure({
-            //   allowBase64: true,
-            // })
+            TiptapImage.configure({
+                allowBase64: true,
+                inline: true,
+            })
         ],
         // content: content,
         content: {
@@ -108,7 +109,17 @@ export const Editor = ({data, setData}) => {
     const [mode, setMode] = useState(modes.NOTETAKING); // 'Notetaking' or 'Read-Only'
     const [searchQuestion, setSearchQuestion] = useState("");
     const [searchResult, setSearchResult] = useState("")
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const [imageSrc, setImageSrc] = useState("")
+    const {
+        isOpen: isSearchModalOpen,
+        onOpen: onSearchModalOpen,
+        onOpenChange: onSearchModalOpenChange
+    } = useDisclosure();
+    const {
+        isOpen: isAddImageModalOpen,
+        onOpen: onAddImageModalOpen,
+        onOpenChange: onAddImageModalOpenChange
+    } = useDisclosure();
 
     useEffect(() => {
         if (editor) {
@@ -237,7 +248,7 @@ export const Editor = ({data, setData}) => {
 
     async function search(question) {
         setSearchResult("Loading...")
-        onOpen()
+        onSearchModalOpen()
         await fetch(`${config.API_URL}/api/generate`, {
             method: "POST",
             credentials: "include",
@@ -266,12 +277,16 @@ export const Editor = ({data, setData}) => {
         }
     }
 
+    function handleImageSrcChange(event) {
+        setImageSrc(event.target.value)
+    }
+
     return (
         <section className="px-0 min-w-7xl flex-grow">
             <Modal
-                isOpen={isOpen}
+                isOpen={isSearchModalOpen}
                 placement="top"
-                onOpenChange={onOpenChange}
+                onOpenChange={onSearchModalOpenChange}
             >
                 <ModalContent>
                     {(onClose) => (
@@ -284,6 +299,36 @@ export const Editor = ({data, setData}) => {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Close
                                 </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+            <Modal
+                isOpen={isAddImageModalOpen}
+                placement="top"
+                onOpenChange={onAddImageModalOpenChange}
+            >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">{searchQuestion}</ModalHeader>
+                            <ModalBody>
+                            <Input id="clear-border" content={imageSrc} onChange={handleImageSrcChange} />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="light" onPress={onClose}>
+                                    Close
+                                </Button>
+                                <Button color="primary" variant="light" onPress={() => {
+                                    editor.commands.setImage({
+                                        src: imageSrc,
+                                        alt: 'A boring example image',
+                                        // title: 'An example'
+                                    })
+                                    onClose()
+                                    setImageSrc("")
+                                }}>Add Image</Button>
                             </ModalFooter>
                         </>
                     )}
@@ -337,32 +382,33 @@ export const Editor = ({data, setData}) => {
                     </DropdownMenu>
                 </Dropdown>
                 <Input content={searchQuestion} onKeyDown={handleSearchChange} type="search"
-                    placeholder="Ask something..."
-                    id="clear-border"
-                    classNames={{
-                        wrapper: "h-10",
-                        inputWrapper: "h-10",
-                    }}
+                       placeholder="Ask something..."
+                       id="clear-border"
+                       classNames={{
+                           wrapper: "h-10",
+                           inputWrapper: "h-10",
+                       }}
                 ></Input>
                 <Button className="gradient-bg flex-shrink" type="button" onClick={saveNote}>Save</Button>
             </div>
 
             <div className="px-4 pt-4">
                 <Image
-                width={10000}
-                height={240}
-                src={config.API_URL + "/static/generated/" + id + ".png"}
-                // fallbackSrc="https://via.placeholder.com/300x200"
-                alt="NextUI Image with fallback"
-                classNames={{
-                    wrapper: `w-full max-w-full mt-0 mb-2 ${imageLoaded ? 'block' : 'hidden'}`,
-                    img: 'rounded-md w-full object-cover h-60'
-                }}
-                onLoad={() => {
-                    setImageLoaded(true)
-                }}
+                    width={10000}
+                    height={240}
+                    src={config.API_URL + "/static/generated/" + id + ".png"}
+                    // fallbackSrc="https://via.placeholder.com/300x200"
+                    alt="NextUI Image with fallback"
+                    classNames={{
+                        wrapper: `w-full max-w-full mt-0 mb-2 ${imageLoaded ? 'block' : 'hidden'}`,
+                        img: 'rounded-md w-full object-cover h-60'
+                    }}
+                    onLoad={() => {
+                        setImageLoaded(true)
+                    }}
                 />
-                <input className="bg-transparent outline-none border-none text-4xl font-bold text-gray-800 mt-4 mb-4" onChange={handleTitleChange} value={title}/>
+                <input className="bg-transparent outline-none border-none text-4xl font-bold text-gray-800 mt-4 mb-4"
+                       onChange={handleTitleChange} value={title}/>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
               Editable
@@ -436,6 +482,20 @@ export const Editor = ({data, setData}) => {
                                     Question
                                 </button>
                                 <button
+                                    onClick={() => {
+                                        onAddImageModalOpen()
+                                    }}
+                                    className={`${
+                                        editor.isActive("questionNode")
+                                            ? "is-active floating-menu-button"
+                                            : "floating-menu-button"
+                                    }
+                                    text-left px-2 hover:brightness-75
+                                    `}
+                                >
+                                    Image
+                                </button>
+                                <button
                                     onClick={() =>
                                         editor.chain().focus().toggleBulletList().run()
                                     }
@@ -467,7 +527,7 @@ export const Editor = ({data, setData}) => {
                         <EditorContent editor={editor}/>
                 )}
             </div>
-            {notification && <Notification message={notification} setMessage={setNotification} />}
+            {notification && <Notification message={notification} setMessage={setNotification}/>}
         </section>
     );
 };
