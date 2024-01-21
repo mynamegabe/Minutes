@@ -454,7 +454,6 @@ export const Editor = ({ data, setData }) => {
                     <FloatingMenu editor={editor} tippyOptions={{duration: 100}}>
                         <Card>
                             <CardBody>
-                                <p className="text-lg px-2 underline font-bold mb-1">MENU</p>
                                 <button
                                     onClick={() =>
                                         editor.chain().focus().toggleHeading({level: 1}).run()
