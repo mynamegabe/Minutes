@@ -6,7 +6,8 @@
 
 .sidebarContainer{
     height: calc(100vh - 65px);
-    transition: all 0.15s ease-in-out;
+    width: 60px;
+    transition: all 0.15s ease-in-out; 
 }
 
 .sidebarContainer.sidebarOpen{
