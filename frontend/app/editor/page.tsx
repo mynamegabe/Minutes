@@ -8,7 +8,7 @@ import { SidebarWrapper } from '@/components/Sidebar/SidebarWrapper'
 
 export default function EditorPage() {
 	const [activeTab, setActiveTab] = useState(0)
-	const [activeTabData, setActiveTabData] = useState({})
+	const [activeTabData, setActiveTabData] = useState({"id": 1})
     const [nodeData, setNodeData] = useState('')
 	return (
 		<>

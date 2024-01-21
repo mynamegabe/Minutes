@@ -1,10 +1,10 @@
 version: '3.8'
 services:
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #   ports:
-  #     - "80:4173"
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "1337:3000"
   #   links:
   #   - backend
   # backend:

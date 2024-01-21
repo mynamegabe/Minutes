@@ -65,24 +65,10 @@ nav header {
     }
 }
 
-.tippy-box {
-
-}
-
-/* 
-button.floating-menu-button {
-    2px thick rounded borders;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    margin: 0px;
-    text-align: left;
-    padding:
-} */
-
 button.floating-menu-button:focus {
     background: black;
     color: white;
-} */
+}
 
 .question-node{
     width: 95%;
@@ -90,7 +76,6 @@ button.floating-menu-button:focus {
 
 
 .question-node label {
-    /* font-weight: bold; */
     margin-bottom: 0.4rem;
 }
 
