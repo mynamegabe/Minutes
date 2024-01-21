@@ -1,69 +1,78 @@
 "use client";
 
 import {
-    BubbleMenu,
-    EditorContent,
-    FloatingMenu,
-    useEditor,
+  BubbleMenu,
+  EditorContent,
+  FloatingMenu,
+  useEditor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TiptapImage from "@tiptap/extension-image";
 import {QuestionNode} from "./editor-nodes/QuestionNode.jsx";
 import React, {useEffect, useState} from "react";
 import {
-    Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownItem,
-    Button,
-    Spinner,
-    Image,
-    Input, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+  Spinner,
+  Image,
+  Input,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
 } from "@nextui-org/react";
-import {Card, CardBody} from "@nextui-org/react";
-import {QuizCard} from "./editor-nodes/QuizCard.jsx";
-import {Notification} from "@/components/Notification.jsx"
+import { Card, CardBody } from "@nextui-org/react";
+import { QuizCard } from "./editor-nodes/QuizCard.jsx";
+import { Notification } from "@/components/Notification.jsx";
 
-import {ChevronDown} from 'lucide-react';
+import { ChevronDown } from "lucide-react";
 import config from "@/config.jsx";
 
 // enum Mode
 
 const modes = {
-    NOTETAKING: "Notetaking",
-    READ_ONLY: "Read-Only",
-    QUIZ_MODE: "Quiz-Mode",
-}
+  NOTETAKING: "Notetaking",
+  READ_ONLY: "Read-Only",
+  QUIZ_MODE: "Quiz-Mode",
+};
 
-export const Editor = ({data, setData}) => {
-    let {title: originalTitle, content, id} = data;
-    // content = JSON.parse(content)
-    const [title, setTitle] = useState(originalTitle);
+export const Editor = ({ data, setData }) => {
+  let { title: originalTitle, content, id } = data;
+  // content = JSON.parse(content)
+  const [title, setTitle] = useState(originalTitle);
 
-    function updateNotesOnDb(editor) {
-        if (!editor) {
-            console.log("editor is null")
-            return
-        }
-        const data = {
-            title: title,
-            content: JSON.stringify(editor ? editor.getJSON().content : []),
-        };
-        setData(data)
-        fetch(`${config.API_URL}/api/notes/${id}`, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        }).then((response) => {
-            // return response.json()
-            console.log("SAVED")
-        }).then((data) => {
-            console.log("PUT", data)
-        }).catch((error) => {
-            console.log(error)
-        })
+  function updateNotesOnDb(editor) {
+    if (!editor) {
+      console.log("editor is null");
+      return;
     }
+    const data = {
+      title: title,
+      content: JSON.stringify(editor ? editor.getJSON().content : []),
+    };
+    setData(data);
+    fetch(`${config.API_URL}/api/notes/${id}`, {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        // return response.json()
+        console.log("SAVED");
+      })
+      .then((data) => {
+        console.log("PUT", data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
 // })
     const editor = useEditor({
@@ -241,10 +250,20 @@ export const Editor = ({data, setData}) => {
         // updateNotesOnDb(editor)
     }
 
-    function saveNote() {
-        console.log("saveNote")
-        updateNotesOnDb(editor)
-    }
+  function saveNote() {
+    console.log("saveNote");
+    updateNotesOnDb(editor);
+  }
+
+  function getHTMLQns(htmlString) {
+    const container = document.createElement("div");
+    container.innerHTML = htmlString;
+
+    // Filter out the question-node elements
+    const questionNodes = container.querySelectorAll("question-node");
+
+    return [...questionNodes];
+  }
 
     async function search(question) {
         setSearchResult("Loading...")
@@ -506,28 +525,34 @@ export const Editor = ({data, setData}) => {
                                     }
                                         text-left px-2 hover:brightness-75
                                         `}
-                                >
-                                    Bullets
-                                </button>
-                            </CardBody>
-                        </Card>
-                    </FloatingMenu>
-                )}
-                {(mode === modes.QUIZ_MODE ?
-                        <div>
-                            {editor &&
-                                editor
-                                    .getJSON()
-                                    .content.filter((x) => x.type === "questionNode")
-                                    .map((x) => x.attrs)
-                                    .map(({question, answer}, index) => (
-                                        (<QuizCard key={index} question={question} expectedAnswer={answer}/>)
-                                    ))}
-                        </div> :
-                        <EditorContent editor={editor}/>
-                )}
-            </div>
-            {notification && <Notification message={notification} setMessage={setNotification}/>}
-        </section>
-    );
+                >
+                  Bullets
+                </button>
+              </CardBody>
+            </Card>
+          </FloatingMenu>
+        )}
+        {mode === modes.QUIZ_MODE ? (
+          <div>
+            {editor &&
+              getHTMLQns(editor.getHTML()).map((question, index) => (
+                <div key={index}>
+                  <QuizCard
+                    key={index}
+                    question={question.getAttribute("question")}
+                    expectedAnswer={question.getAttribute("answer")}
+                  />
+                  <br />
+                </div>
+              ))}
+          </div>
+        ) : (
+          <EditorContent editor={editor} />
+        )}
+      </div>
+      {notification && (
+        <Notification message={notification} setMessage={setNotification} />
+      )}
+    </section>
+  );
 };

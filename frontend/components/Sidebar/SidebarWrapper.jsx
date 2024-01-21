@@ -51,24 +51,23 @@ export function SidebarWrapper(props) {
     }
   }, []);
 
-    const fetchData = async () => {
-      try {
-        const data = await getNodeById(tabs[activeTab].id);
-        console.log(data, "lolll");
-        if (!data.status === "success") {
-          throw new Error("Error occurred when fetching node by ID!");
-        }
-        setNodeData(data);
-        setActiveTabData(data.data);
-      } catch (e) {
-        console.error(e.message);
-      }
-    };
-
 
     useEffect(() => {
-        fetchData();
-    }, [activeTab]);
+      const fetchData = async () => {
+        try {
+          const data = await getNodeById(tabs[activeTab].id);
+          console.log(data, "lolll");
+          if (!data.status === "success") {
+            throw new Error("Error occurred when fetching node by ID!");
+          }
+          setNodeData(data);
+          setActiveTabData(data.data);
+        } catch (e) {
+          console.error(e.message);
+        }
+      };
+      fetchData()
+    }, [activeTab, setActiveTabData, setNodeData, tabs])
 
   const handleSidebarOpen = () => {
     setSidebarOpen(!sidebarOpen);

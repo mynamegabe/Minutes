@@ -3,7 +3,7 @@ import './SidebarTab.css'
 import {Card, Button, Spinner} from '@nextui-org/react'
 import { Check, Trash, X } from 'lucide-react';
 
-import { deleteNodeById } from '@/logic-handling/deleteNodebyId'
+import { deleteNodeById } from '@/logic-handling/deleteNodeById'
 
 export function SidebarTab (props) {
     const {active, children, tabIcon, onClick, tabId, setTabs } = props;
