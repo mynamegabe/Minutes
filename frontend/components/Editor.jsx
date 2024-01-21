@@ -333,7 +333,7 @@ export const Editor = ({ data, setData }) => {
                         <>
                             <ModalHeader className="flex flex-col gap-1">{searchQuestion}</ModalHeader>
                             <ModalBody>
-                            <Input id="clear-border" content={imageSrc} onChange={handleImageSrcChange} />
+                            <Input id="clear-border" placeholder="Add image url" content={imageSrc} onChange={handleImageSrcChange} />
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={onClose}>
