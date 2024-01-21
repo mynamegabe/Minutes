@@ -114,6 +114,7 @@ export function SidebarWrapper(props) {
                   placeholder=""
                   onChange={(event) => setTitle(event.target.value)}
                   variant="bordered"
+                  id="clear-border"
                   classNames={{
                     input:
                       "border-0 outline-none focus:outline-none shadow-none focus:shadow-none border-none focus:border-none ",
