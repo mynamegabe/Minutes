@@ -6,6 +6,8 @@ bin-release/
 __pycache__/
 node_modules/
 
+config.py
+
 # Other files and folders
 .settings/
 

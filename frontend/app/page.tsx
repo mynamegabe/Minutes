@@ -9,7 +9,7 @@ import { ArrowRightCircle } from 'lucide-react';
 
 export default function Home() {
 	return (
-		<section className="fill-body flex flex-row items-center gradient-bg px-8 py-8 md:py-10">
+		<section className="fill-body flex flex-row gap-8 items-center justify-center gradient-bg px-8 py-8 md:py-10">
 			<div className="flex flex-col justify-center">
 				<p className={`${title()} mb-4`}>Minutes</p>
 				<p className={`${subtitle()}`}>A simple note taking app to enhance education. <br/>
