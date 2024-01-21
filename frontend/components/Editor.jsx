@@ -357,7 +357,7 @@ export const Editor = ({ data, setData }) => {
                 className="flex p-4 gap-4 sticky top-16 z-50 w-full backdrop-blur-lg bg-stone-200/50 dark:bg-neutral-950/60">
                 <Dropdown>
                     <DropdownTrigger>
-                        <Button variant="bordered" className="mb-0">{mode} <ChevronDown size={16}/></Button>
+                        <Button variant="bordered" className="mb-0 px-8">{mode} <ChevronDown size={16}/></Button>
                     </DropdownTrigger>
                     <DropdownMenu
                         aria-label="Modes"
@@ -425,7 +425,7 @@ export const Editor = ({ data, setData }) => {
                         setImageLoaded(true)
                     }}
                 />
-                <input className="bg-transparent outline-none border-none text-4xl font-bold text-gray-800 mt-4 mb-4"
+                <input className="bg-transparent outline-none border-none text-4xl font-bold text-gray-800 mt-4 mb-4 dark:text-white"
                        onChange={handleTitleChange} value={title}/>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
@@ -441,7 +441,7 @@ export const Editor = ({ data, setData }) => {
                                 }
                                 className="bg-rose-500 hover:bg-rose-700 text-white px-2 py-1 rounded-md shadow"
                             >
-                                Generate
+                                Generate Questions
                             </button>
                         ) : (
                             <Button color="primary" isLoading>
