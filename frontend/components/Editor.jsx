@@ -362,7 +362,7 @@ export const Editor = ({data, setData}) => {
                     setImageLoaded(true)
                 }}
                 />
-                <input className="bg-transparent outline-none border-none" onChange={handleTitleChange} value={title}/>
+                <input className="bg-transparent outline-none border-none text-4xl font-bold text-gray-800 mt-4 mb-4" onChange={handleTitleChange} value={title}/>
                 {/* <div>
               <input type="checkbox" checked={isEditable} onChange={() => setIsEditable(!isEditable)}/>
               Editable
