@@ -9,13 +9,18 @@ import { ArrowRightCircle } from 'lucide-react';
 
 export default function Home() {
 	return (
-		<section className="flex flex-col justify-center gradient-bg px-8 py-8 md:py-10 h-full">
-			<p className={`${title()} mb-4`}>Minutes</p>
-			<p className={`${subtitle()}`}>A simple note taking app to enhance education. <br/>
-			Made for Students, by Students</p>
-			<Button radius="full" as={Link} href="/login" className="mt-4 w-fit bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg">
-			Learn the Difference <ArrowRightCircle />
-			</Button>
+		<section className="fill-body flex flex-row items-center gradient-bg px-8 py-8 md:py-10">
+			<div className="flex flex-col justify-center">
+				<p className={`${title()} mb-4`}>Minutes</p>
+				<p className={`${subtitle()}`}>A simple note taking app to enhance education. <br/>
+				Made for Students, by Students</p>
+				<Button radius="full" as={Link} href="/login" className="mt-4 w-fit bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg">
+				Learn the Difference <ArrowRightCircle />
+				</Button>
+			</div>
+			<div className="flex flex-col items-center justify-center">
+				<img src="/robot.png" className="w-96 h-96" />
+			</div>
 			{/* <div className="inline-block max-w-lg text-center justify-center">
 				<h1 className={title()}>Make&nbsp;</h1>
 				<h1 className={title({ color: "violet" })}>beautiful&nbsp;</h1>
