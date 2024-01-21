@@ -2,13 +2,13 @@
 import React, {useState } from 'react'
 import { title } from "@/components/primitives";
 import "@/styles/globals.css";
-import { Editor } from "@/components/editor";
+import { Editor } from "@/components/Editor";
 
 import { SidebarWrapper } from '@/components/Sidebar/SidebarWrapper'
 
 export default function EditorPage() {
 	const [activeTab, setActiveTab] = useState(0)
-	const [activeTabData, setActiveTabData] = useState({})
+	const [activeTabData, setActiveTabData] = useState({"id": 1})
     const [nodeData, setNodeData] = useState('')
 	return (
 		<>
