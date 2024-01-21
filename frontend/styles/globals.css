@@ -101,3 +101,7 @@ button.gradient-bg:hover {
     outline: none !important;
     box-shadow: none !important;
 }
+
+.fill-body {
+    height: calc(100vh - 64px);
+}

@@ -65,6 +65,7 @@ app = FastAPI(middleware=middleware, lifespan=lifespan)
 
 origins = [
     "http://localhost:3000",
+    "https://minutes.defmain.xyz"
     # "*"
 ]
 

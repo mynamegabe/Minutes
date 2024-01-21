@@ -7,7 +7,7 @@ pipe.to("cuda")
 # if using torch < 2.0
 # pipe.enable_xformers_memory_efficient_attention()
 
-prompt = "An astronaut riding a green horse"
+prompt = "Vector of a notebook with robotic elements and clear background"
 
 images = pipe(prompt=prompt).images[0]
 
