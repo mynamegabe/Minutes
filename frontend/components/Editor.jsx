@@ -452,9 +452,9 @@ export const Editor = ({ data, setData }) => {
                 )}
                 {editor && (
                     <FloatingMenu editor={editor} tippyOptions={{duration: 100}}>
-                        <Card className="py-1">
+                        <Card>
                             <CardBody>
-                                <p className="text-xs px-2">MENU</p>
+                                <p className="text-lg px-2 underline font-bold mb-1">MENU</p>
                                 <button
                                     onClick={() =>
                                         editor.chain().focus().toggleHeading({level: 1}).run()
@@ -464,7 +464,7 @@ export const Editor = ({ data, setData }) => {
                                             ? "is-active floating-menu-button"
                                             : "floating-menu-button"
                                     }
-                                     text-left px-2 hover:brightness-75
+                                     text-left text-sm px-2 py-1 hover:brightness-75
                                     `}
                                 >
                                     Heading 1
@@ -478,7 +478,7 @@ export const Editor = ({ data, setData }) => {
                                             ? "is-active floating-menu-button"
                                             : "floating-menu-button"
                                     }
-                                        text-left px-2 hover:brightness-75
+                                        text-left text-sm px-2 py-1 hover:brightness-75
                                         `}
                                 >
                                     Heading 2
@@ -494,7 +494,7 @@ export const Editor = ({ data, setData }) => {
                                             ? "is-active floating-menu-button"
                                             : "floating-menu-button"
                                     }
-                                    text-left px-2 hover:brightness-75
+                                    text-left text-sm px-2 py-1 hover:brightness-75
                                     `}
                                 >
                                     Question
@@ -508,7 +508,7 @@ export const Editor = ({ data, setData }) => {
                                             ? "is-active floating-menu-button"
                                             : "floating-menu-button"
                                     }
-                                    text-left px-2 hover:brightness-75
+                                    text-left text-sm px-2 py-1 hover:brightness-75
                                     `}
                                 >
                                     Image
@@ -522,7 +522,7 @@ export const Editor = ({ data, setData }) => {
                                             ? "is-active floating-menu-button"
                                             : "floating-menu-button"
                                     }
-                                        text-left px-2 hover:brightness-75
+                                        text-left text-sm px-2 py-1 hover:brightness-75
                                         `}
                 >
                   Bullets
