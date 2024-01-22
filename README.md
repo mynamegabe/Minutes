@@ -1,4 +1,4 @@
-# HacknRoll24
+# Minutes
 
 ## Setup
 ### Frontend
