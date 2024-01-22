@@ -1,6 +1,4 @@
-from fastapi import Request
+from fastapi import Request, HTTPException
 
 def authorize_user(request: Request):
-    if not request.session.get("username"):
-        return False
-    return request.session.get("username")
+    return request.session.get("username", "")

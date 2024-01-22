@@ -60,7 +60,7 @@ async def lifespan(app: FastAPI):
     db.close()
     yield
 
-middleware = [Middleware(SessionMiddleware, secret_key=config.SECRET_KEY)]
+middleware = [Middleware(SessionMiddleware, secret_key=config.SECRET_KEY, same_site="none", https_only=True)]
 app = FastAPI(middleware=middleware, lifespan=lifespan)
 
 origins = [
@@ -119,6 +119,7 @@ async def register(user: userSchema.UserBase, db: Session = Depends(get_db)):
     db_note = notesController.create_note(db, note)
     db_user = userController.get_user_by_username(db, user.username)
     db_user.notes.append(db_note)
+    db.commit()
     return {
         "status": "success",
         "msg": "User created successfully!",
@@ -134,7 +135,7 @@ async def login(request: Request, user: userSchema.UserBase, db: Session = Depen
             "status": "error",
             "msg": "Incorrect username or password",
         }
-    request.session["user"] = db_user.username
+    request.session["username"] = db_user.username
     return {
         "status": "success",
         "msg": "Logged in successfully!",
